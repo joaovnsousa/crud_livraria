@@ -119,4 +119,3 @@ class GerenciaLivraria:
         return resultados
         
     
-gerente = GerenciaLivraria()
