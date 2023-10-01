@@ -1,7 +1,7 @@
 import mysql.connector
     
 class Livros:
-    def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume):
+    def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma):
         self.__titulo = titulo
         self.__autor = autor
         self.__genero = genero
@@ -11,6 +11,7 @@ class Livros:
         self.__edicao = edicao
         self.__isbn = isbn
         self.__volume = volume
+        self.__idioma = idioma
 
     def get_titulo(self):
         return self.__titulo
@@ -39,6 +40,9 @@ class Livros:
     def get_volume(self):
         return self.__volume
 
+    def get_idioma(self):
+        return self.__idioma
+
 class GerenciaLivraria:
     def __init__(self, host, user, password, database):
         self.conexao = mysql.connector.connect (
@@ -53,7 +57,7 @@ class GerenciaLivraria:
 
     #1.1
     def inserir_livros(self, livro):
-        insercao = "INSERT INTO livros(titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        insercao = "INSERT INTO livros(titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         parametros = (
             livro.get_titulo(),
@@ -64,7 +68,8 @@ class GerenciaLivraria:
             livro.get_data_publicacao(),
             livro.get_edicao(),
             livro.get_isbn(),
-            livro.get_volume()
+            livro.get_volume(),
+            livro.get_idioma()
         )
 
         self.cursor.execute(insercao, parametros)
@@ -107,4 +112,3 @@ class GerenciaLivraria:
         
     
 gerente = GerenciaLivraria(host="localhost", user="root", password="47Lasanha*", database="crud_livraria")
-
