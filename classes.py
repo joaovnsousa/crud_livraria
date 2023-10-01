@@ -1,4 +1,5 @@
 import mysql.connector
+from APIkeys import *
     
 class Livros:
     def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma):
@@ -44,12 +45,12 @@ class Livros:
         return self.__idioma
 
 class GerenciaLivraria:
-    def __init__(self, host, user, password, database):
+    def __init__(self):
         self.conexao = mysql.connector.connect (
-            host = host,
-            user = user,
-            password = password,
-            database = database,
+            host = credencial_nome,
+            user = credencial_user,
+            password = credencial_passwd,
+            database = credencial_database,
         )
         self.cursor = self.conexao.cursor()
         self.livro = None
@@ -111,4 +112,4 @@ class GerenciaLivraria:
         return resultados
         
     
-gerente = GerenciaLivraria(host="localhost", user="root", password="47Lasanha*", database="crud_livraria")
+gerente = GerenciaLivraria()
