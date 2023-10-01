@@ -2,11 +2,9 @@ from classes import Livros, GerenciaLivraria
 
 class Menu:
     def __init__(self):
-        self.livro = None
+        self.livro_instanciado = None
         self.instancia_livraria = GerenciaLivraria()
     
-
-
     def menu(self):
         print('Olá! Seja bem-vindo ao Los Libros Hermanos.')
         print('-------------------------------------------')
@@ -21,6 +19,7 @@ class Menu:
             case 1:
                 print('-------------------------------------------')
                 self.menu_inserir()
+                return True
 
             case 2:
                 print('-------------------------------------------')
@@ -81,29 +80,34 @@ class Menu:
                 print('Livro inserido com sucesso!')
 
                 return
-            
 
-
-
-    def checa_isbn(isbn):
-        if (len(isbn) < 13 or len(isbn) > 13):
-            print('A quantidade de caracteres está errada. Tente novamente')
-            return False
+    def verifica_isbn_10(isbn):
         soma = 0
-        for i in range(0, len(isbn) - 1):
-            if(i % 2 != 0):
-                soma = soma + int (isbn[i])
-            else:
-                soma = soma + 3 * int (isbn[i])
-        multiplo10Soma = soma
-        while multiplo10Soma % 10 != 0:
-            multiplo10Soma = multiplo10Soma + 1
-        if multiplo10Soma - soma == int (isbn[12]):
-            print('Sucesso!')
+        for i in range(1, len(isbn) + 1):
+            soma = soma + int (isbn[i-1])* i
+        if soma % 11 == 0:
             return True
         else:
-            print('ISBN inválido. Tente novamente')
             return False
+
+    def verifica_isbn_13(isbn):
+        soma = (sum(int(isbn) for caractere in isbn[::2]) + sum(int(isbn) * 3 for caractere in isbn[1::2]))
+        return soma % 10 == 0
+    
+    def checa_isbn(isbn, self):
+        isbn = isbn.replace('-', '').replace(' ', '')
+        if len(isbn) == 10:
+            validacao = self.verifica_isbn_10(isbn)
+
+        if len(isbn) == 13:
+            validacao = self.verifica_isbn_13(isbn)
+        else:
+            print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
+        if validacao == True:
+            print('ISBN válido!')
+        else:
+            print('ISBN não é válido. Tente novamente')
+
 menu = Menu()
 menu.menu()
