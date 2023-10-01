@@ -38,41 +38,51 @@ class Menu:
     def menu_inserir(self):
         print('Insira abaixo as informações do livro: ')
 
-    
-        # solicita as informações do livro:
+        while True:
+            try:
+                # solicita as informações do livro:
 
-        titulo = input('Título: ')
-        autor = input('Autor: ')
-        genero = input('Gênero: ')
-        editora = input('Editora: ')
-        preco = float(input('Preço: '))
-        data_publicacao = input('Data de Publicação (AAAA-MM-DD): ')
-        edicao = input('Edição: ')
-        isbn = input('ISBN: ')
-        volume = int(input('Volume: '))
-        idioma = input('Idioma: ')
-
-        novo_livro = Livros(
-        titulo,
-        autor,
-        genero,
-        editora,
-        preco,
-        data_publicacao,
-        edicao,
-        isbn,
-        volume,
-        idioma
-        )
-    
-        # Chame o método criar_livro() para inserir o livro no banco de dados
-        self.instancia_livraria.inserir_livros(novo_livro)
+                titulo = input('Título: ')
+                autor = input('Autor: ')
+                genero = input('Gênero: ')
+                editora = input('Editora: ')
+                preco = float(input('Preço: '))
+                data_publicacao = input('Data de Publicação (AAAA-MM-DD): ')
+                edicao = input('Edição: ')
+                isbn = input('ISBN: ')
+                volume = int(input('Volume: '))
+                idioma = input('Idioma: ')
 
 
-    
-        print('Livro inserido com sucesso!')
+                # tratamento de erros:
 
-        return
+                if preco < 0:
+                    raise ValueError("O preço não pode ser um número negativo.")
+                
+                if volume
+
+                novo_livro = Livros(
+                titulo,
+                autor,
+                genero,
+                editora,
+                preco,
+                data_publicacao,
+                edicao,
+                isbn,
+                volume,
+                idioma
+                )
+            
+                self.instancia_livraria.inserir_livros(novo_livro)
+
+
+            
+                print('Livro inserido com sucesso!')
+
+                return
+            
+
 
 
     def checa_isbn(isbn):
