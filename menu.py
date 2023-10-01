@@ -20,7 +20,7 @@ class Menu:
         match escolha:
             case 1:
                 print('-------------------------------------------')
-                Menu.menu_inserir()
+                self.menu_inserir()
 
             case 2:
                 print('-------------------------------------------')

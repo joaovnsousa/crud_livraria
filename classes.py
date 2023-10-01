@@ -83,7 +83,6 @@ class GerenciaLivraria:
         self.cursor.execute(insercao, parametros)
         self.conexao.commit()
 
-        print("Livro inserido com sucesso!")
 
     #1.2
     def atualiza_campo(self, id, campo, valor):
