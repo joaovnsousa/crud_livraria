@@ -51,13 +51,7 @@ class GerenciaLivraria:
         self.livro = None
         self.menu = None
 
-    #1.5
-    def consultar_livros(self):
-        consulta = "SELECT * FROM livros"
-        self.cursor.execute(consulta)
-        resultados = self.cursor.fetchall()
-        print(resultados)
-
+    #1.1
     def inserir_livros(self, livro):
         insercao = "INSERT INTO livros(titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
@@ -78,6 +72,38 @@ class GerenciaLivraria:
 
         print("Livro inserido com sucesso!")
 
+    #1.2
+    def atualiza_campo(self, id, campo, valor):
+        consulta = f'UPDATE livros SET {campo} = {valor} WHERE idLivros = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    #1.3
+    def pesquisa_por_titulo(self, titulo):
+        consulta = f'SELECT * FROM livros WHERE titulo = "{titulo}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
+    #1.4
+    def remove_por_id(self, id):
+        consulta = f'DELETE FROM livros WHERE idLivros = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    #1.5
+    def consultar_livros(self):
+        consulta = "SELECT * FROM livros"
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        print(resultados)
+
+    #1.6
+    def pesquisa_por_id(self, id):
+        consulta = f'SELECT * FROM livros WHERE idLivros = {id}'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
         
     
 gerente = GerenciaLivraria(host="localhost", user="root", password="47Lasanha*", database="crud_livraria")
