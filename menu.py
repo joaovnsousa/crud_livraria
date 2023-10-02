@@ -118,10 +118,7 @@ class Menu:
         soma = 0
         for i in range(1, len(isbn) + 1):
             soma = soma + int (isbn[i-1])* i
-        if soma % 11 == 0:
-            return True
-        else:
-            return False
+        return soma % 11 == 0
 
     def verifica_isbn_13(isbn):
         soma = (sum(int(caractere) for caractere in isbn[::2]) + sum(int(caractere) * 3 for caractere in isbn[1::2]))
