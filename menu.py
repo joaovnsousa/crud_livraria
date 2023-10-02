@@ -50,30 +50,30 @@ class Menu:
 
                 genero = input('Gênero: ')
                 editora = input('Editora: ')
+
                 preco = float(input('Preço: '))
+                if preco < 0:
+                    raise ValueError("o preço não pode ser um número negativo.")
+
                 data_publicacao = input('Data de Publicação (AAAA-MM-DD): ')
+                
                 edicao = int(input('Edição: '))
+                if edicao <= 0:
+                    raise ValueError("o livro deve ter pelo menos uma edição.")
+                
+
                 isbn = input('ISBN: ')
+                
                 volume = int(input('Volume: '))
+                if volume < 0:
+                    raise ValueError("o volume não pode ser um número negativo. Digite 0 caso não haja volume.")
+               
                 idioma = input('Idioma: ')
 
 
                 # tratamento de erros:
 
-                if preco < 0:
-                    raise ValueError("O preço não pode ser um número negativo.")
-                
-                if volume < 0:
-                    raise ValueError("O volume não pode ser um número negativo. Digite 0 caso não haja volume.")
-                
-                if edicao <= 0:
-                    raise ValueError("O livro deve ter pelo menos uma edição.")
-                
-
-                
-
-                    
-
+                              
                 novo_livro = Livros(
                 titulo,
                 autor,
@@ -112,7 +112,7 @@ class Menu:
             return False
 
     def verifica_isbn_13(isbn):
-        soma = (sum(int(caractere) for caractere in isbn[::2]) + sum(int(caractere) * 3 for caractere in isbn[1::2]))
+        soma = (sum(int(isbn) for caractere in isbn[::2]) + sum(int(isbn) * 3 for caractere in isbn[1::2]))
         return soma % 10 == 0
     
     def checa_isbn(isbn, self):
@@ -125,7 +125,10 @@ class Menu:
         else:
             print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
-        return validacao
+        if validacao == True:
+            print('ISBN válido!')
+        else:
+            print('ISBN não é válido. Tente novamente')
 
 menu = Menu()
 menu.menu()
