@@ -1,4 +1,5 @@
 from classes import Livros, GerenciaLivraria
+#import requests
 
 class Menu:
     def __init__(self):
@@ -43,11 +44,15 @@ class Menu:
 
                 titulo = input('Título: ')
                 autor = input('Autor: ')
+
+                if not titulo.strip() or not autor.strip():
+                    raise ValueError("Título e autor não podem ser vazios.")
+
                 genero = input('Gênero: ')
                 editora = input('Editora: ')
                 preco = float(input('Preço: '))
                 data_publicacao = input('Data de Publicação (AAAA-MM-DD): ')
-                edicao = input('Edição: ')
+                edicao = int(input('Edição: '))
                 isbn = input('ISBN: ')
                 volume = int(input('Volume: '))
                 idioma = input('Idioma: ')
@@ -58,7 +63,16 @@ class Menu:
                 if preco < 0:
                     raise ValueError("O preço não pode ser um número negativo.")
                 
-                if volume
+                if volume < 0:
+                    raise ValueError("O volume não pode ser um número negativo. Digite 0 caso não haja volume.")
+                
+                if edicao <= 0:
+                    raise ValueError("O livro deve ter pelo menos uma edição.")
+                
+
+                
+
+                    
 
                 novo_livro = Livros(
                 titulo,
@@ -80,6 +94,13 @@ class Menu:
                 print('Livro inserido com sucesso!')
 
                 return
+            
+
+            except ValueError as e:
+                # Captura exceções ValueError quando as entradas são inválidas
+                print(f"Erro: {e}")
+                print("Por favor, forneça entradas válidas.")
+
 
     def verifica_isbn_10(isbn):
         soma = 0
