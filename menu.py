@@ -112,7 +112,7 @@ class Menu:
             return False
 
     def verifica_isbn_13(isbn):
-        soma = (sum(int(isbn) for caractere in isbn[::2]) + sum(int(isbn) * 3 for caractere in isbn[1::2]))
+        soma = (sum(int(caractere) for caractere in isbn[::2]) + sum(int(caractere) * 3 for caractere in isbn[1::2]))
         return soma % 10 == 0
     
     def checa_isbn(isbn, self):
@@ -125,10 +125,7 @@ class Menu:
         else:
             print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
-        if validacao == True:
-            print('ISBN válido!')
-        else:
-            print('ISBN não é válido. Tente novamente')
+        return validacao
 
 menu = Menu()
 menu.menu()
