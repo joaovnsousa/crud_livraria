@@ -65,12 +65,10 @@ class GerenciaLivraria:
 
     #1.1
     def inserir_livros(self, livro):
-        insercao = "INSERT INTO livros(titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         parametros = (
             livro.get_titulo(),
-            livro.get_autor(),
-            livro.get_genero(),
             livro.get_editora(),
             livro.get_preco(),
             livro.get_data_publicacao(),

@@ -33,7 +33,10 @@ class Menu:
             case _:
                 return "Tente novamente."
 
-    
+
+                
+
+
     def menu_inserir(self):
         print('Insira abaixo as informações do livro: ')
 
@@ -133,6 +136,6 @@ class Menu:
             print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
         return validacao
-
+    
 menu = Menu()
 menu.menu()
