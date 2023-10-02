@@ -82,7 +82,7 @@ class Menu:
                 if edicao <= 0:
                     raise ValueError("O livro deve ter pelo menos uma edição.")
                 
-                if self.checa_isbn() == False:
+                if self.checa_isbn(isbn) == False:
                     raise ValueError("O isbn deve ser inserido corretamente.")
                 
 
