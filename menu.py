@@ -128,19 +128,18 @@ class Menu:
         return soma % 10 == 0
     
     def checa_isbn(isbn, self):
+        validacao = False
         isbn = isbn.replace('-', '').replace(' ', '')
         if len(isbn) == 10:
             validacao = self.verifica_isbn_10(isbn)
 
         if len(isbn) == 13:
             validacao = self.verifica_isbn_13(isbn)
+        
         else:
             print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
-        if validacao == True:
-            print('ISBN válido!')
-        else:
-            print('ISBN não é válido. Tente novamente')
+        return validacao
 
 menu = Menu()
 menu.menu()
