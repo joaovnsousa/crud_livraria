@@ -96,6 +96,24 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+
+    def pesquisa_por_autor(self, autor):
+        consulta = f'SELECT * FROM livros WHERE autor = "{autor}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
+    def pesquisa_por_genero(self, genero):
+        consulta = f'SELECT * FROM livros WHERE genero = "{genero}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
+    def pesquisa_por_editora(self, editora):
+        consulta = f'SELECT * FROM livros WHERE editora = "{editora}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
     
     #1.4
     def remove_por_id(self, id):
