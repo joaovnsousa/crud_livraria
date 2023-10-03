@@ -23,6 +23,7 @@ class Menu:
 
             case 2:
                 print('-------------------------------------------')
+                self.menu_atualizar()
             case 3:
                 print('-------------------------------------------')
                 
@@ -31,12 +32,27 @@ class Menu:
 
             case 4:
                 print('-------------------------------------------')
+                self.menu_remove_livro()
             case 0:
                 return False
 
             case _:
                 return "Tente novamente."
-             
+    
+    def menu_atualizar(self):
+        print(self.instancia_livraria.consulta_geral())
+        idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
+        titulo_atualizado = input('Digite o novo nome do título do livro: ')
+        self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
+        
+        
+    def menu_remove_livro(self):
+        consulta_geral = self.instancia_livraria.consulta_geral()
+        print(consulta_geral)
+        idlivro = int(input('Digite o ID de qual você deseja remover: '))
+        self.remove_livro(idlivro, None, 0)
+        print('Sucesso!')
+
     def menu_escolha_consulta(self):
         print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
         escolha = int(input('Digite sua escolha: '))

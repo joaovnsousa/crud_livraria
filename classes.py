@@ -98,9 +98,8 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         self.conexao.commit()
 
-    #Atualiza um campo específico do livro
-    def atualiza_campo_livro(self, id, campo, valor):
-        consulta = f'UPDATE livros SET {campo} = {valor} WHERE idLivros = {id}'
+    def atualiza_titulo_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET titulo = {valor} WHERE idlivros = {idlivro}'
         self.cursor.execute(consulta)
         self.conexao.commit()
 
@@ -236,8 +235,20 @@ class GerenciaLivraria:
         return resultados
     
     #Remove o livro recebendo o id como parâmetro e utilizando o mesmo para remover
-    def remove_por_id(self, id):
+    def remove_livro_(self, id):
+        self.remove_livro_de_livroAutores(id)
+        self.remove_livro_de_livroGenero(id)
         consulta = f'DELETE FROM livros WHERE idLivros = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+        
+    def remove_livro_de_livroAutores(self, id):
+        consulta = f'DELETE FROM livro_autores WHERE fk_idlivros = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+    
+    def remove_livro_de_livroGenero(self, id):
+        consulta = f'DELETE FROM livro_generos WHERE f_idlivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
 
