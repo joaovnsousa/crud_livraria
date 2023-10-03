@@ -93,13 +93,17 @@ class Menu:
                 titulo = input('Título: ')
                 
                 autores = []
+                autores_existentes = []
                 consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
                 while True:
-                    input_autor = input('Autor:')
-                    print(input_autor)
-                    if input_autor == '' or any(input_autor in tupla for _, tupla in consulta_autores):
+                    input_autor = input('Autor: ')
+                    if(any(input_autor in tupla for _, tupla in consulta_autores)):
+                        print('Esse autor já está disponível no sistema. Caso queira inserir mais um autor, digite seu nome na linha abaixo.')
+                        autores_existentes.append()
+                    if input_autor == '':
                         break
-                    autores.append(input_autor)
+                    else:
+                        autores.append(input_autor)
                 
                 if not titulo.strip():
                     raise ValueError("Título não pode ser vazios.")
@@ -205,6 +209,8 @@ class Menu:
     
     def instancia_livro_autor_genero(self, autores, livro, generos):
         self.instancia_livraria.inserir_livros(livro)
+        idLivro = self.instancia_livraria.cursor.lastrowid
+        print(idLivro)
         for autor in autores:
             self.instancia_livraria.insere_autor(autor)
         for genero in generos:
