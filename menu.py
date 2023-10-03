@@ -47,6 +47,8 @@ class Menu:
                 titulo = input('Título: ')
                 autor = input('Autor: ')
 
+                self.instancia_livraria.insere_autor(autor)
+
                 if not titulo.strip() or not autor.strip():
                     raise ValueError("Título e autor não podem ser vazios.")
 
@@ -110,6 +112,9 @@ class Menu:
                 # Captura exceções ValueError quando as entradas são inválidas
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
+            
+
+                
 
     @staticmethod
     def verifica_isbn_10(isbn):
