@@ -45,7 +45,7 @@ class Menu:
         titulo_atualizado = input('Digite o novo nome do título do livro: ')
         self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
         
-        
+
     def menu_remove_livro(self):
         consulta_geral = self.instancia_livraria.consulta_geral()
         print(consulta_geral)
@@ -223,19 +223,6 @@ class Menu:
                 # Captura exceções ValueError quando as entradas são inválidas
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
-            
-    def printa_consulta(self, livros_obj, parametro, inteiro):
-        print('---------------------------------------------------------------------------------------------------------------------------')
-        if inteiro == 1:
-            for i in range (0, len(livros_obj)):
-                print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {parametro} | Gênero:  Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
-                print('---------------------------------------------------------------------------------------------------------------------------')
-        if inteiro == 2:
-            for i in range (0, len(livros_obj)):
-                print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: |Gênero: {parametro} Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
-                print('---------------------------------------------------------------------------------------------------------------------------')
-
-
                 
 
     @staticmethod

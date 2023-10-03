@@ -241,7 +241,7 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM livros WHERE idLivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
-        
+
     def remove_livro_de_livroAutores(self, id):
         consulta = f'DELETE FROM livro_autores WHERE fk_idlivros = {id}'
         self.cursor.execute(consulta)
@@ -251,7 +251,6 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM livro_generos WHERE f_idlivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
-
     #Pesquisa um livro específico por id
     def pesquisa_por_id(self, id):
         consulta = f'SELECT * FROM livros WHERE idLivros = {id}'
