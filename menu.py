@@ -47,7 +47,7 @@ class Menu:
                 return True
             
             case 2:
-                self.consulta_autor()
+                self.consulta_livro_autor()
                 return True
             case 3:
                 self.consulta_genero()
@@ -74,14 +74,14 @@ class Menu:
         
     def consulta_livro_autor(self):
         autor = (input('Digite o autor do livro: '))
-        consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
-        if (any(autor in tupla for _, tupla in consulta_autores) == False):
+        if (self.instancia_livraria.pesquisa_todos_os_autores() == False):
             print('Esse autor não existe na base de dados!')
             return
         idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
         idAutor = idAutor[0][0]
         livro_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
         print(livro_obj)
+        
 
 
     def menu_inserir(self):
@@ -184,7 +184,7 @@ class Menu:
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
             
-    def trata_dados_consulta(self, livro_obj):
+#def trata_dados_consulta(self, livro_obj):
 
                 
 

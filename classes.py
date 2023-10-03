@@ -119,7 +119,7 @@ class GerenciaLivraria:
     
     #Consulta os livros de um determinado autor e retorna um objeto com o nome dos livros
     def consulta_livros_de_um_autor(self, idAutor):
-        consulta = f'SELECT livros.nome FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = {idAutor}'
+        consulta = f'SELECT * FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = {idAutor}'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
