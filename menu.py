@@ -98,10 +98,13 @@ class Menu:
         if (any(autor in tupla for _, tupla in consulta_autores) == False):
             print('Esse autor não existe na base de dados!')
             return
+        print('a')
         idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
         idAutor = idAutor[0][0]
+        print('b')
         livros_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
-        self.printa_consulta(livros_obj, autor)
+        print('c')
+        self.printa_consulta(livros_obj, autor, 1)
 
 
     def menu_inserir(self):
@@ -204,11 +207,16 @@ class Menu:
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
             
-    def printa_consulta(self, livros_obj, autor):
+    def printa_consulta(self, livros_obj, parametro, inteiro):
         print('---------------------------------------------------------------------------------------------------------------------------')
-        for i in range (0, len(livros_obj)):
-            print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {autor} |Gênero:  Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
-            print('---------------------------------------------------------------------------------------------------------------------------')
+        if inteiro == 1:
+            for i in range (0, len(livros_obj)):
+                print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {parametro} | Gênero:  Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
+                print('---------------------------------------------------------------------------------------------------------------------------')
+        if inteiro == 2:
+            for i in range (0, len(livros_obj)):
+                print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: |Gênero: {parametro} Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
+                print('---------------------------------------------------------------------------------------------------------------------------')
 
 
                 
@@ -258,4 +266,5 @@ class Menu:
             self.instancia_livraria.insere_livro_genero(idLivro, idGenero[0][0])
     
 menu = Menu()
+print(menu.instancia_livraria.consulta_geral())
 menu.menu()

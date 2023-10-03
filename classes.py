@@ -130,7 +130,6 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
-    
 
 
     #Pesquisa por título de livro
@@ -154,7 +153,7 @@ class GerenciaLivraria:
         return resultados
 
     def pesquisa_id_autor(self, autor):
-        consulta = f'SELECT idautores FROM autores JOIN = "{autor}"'
+        consulta = f'SELECT idautores FROM autores WHERE nome = "{autor}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
