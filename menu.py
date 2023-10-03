@@ -47,7 +47,7 @@ class Menu:
                 return True
             
             case 2:
-                self.consulta_autor()
+                self.consulta_livro_autor()
                 return True
             case 3:
                 self.consulta_genero()
@@ -185,11 +185,11 @@ class Menu:
                 print("Por favor, forneça entradas válidas.")
             
     def printa_consulta(self, livros_obj, autor):
-        print('idlivro |          Título          |          Autor          | Editora | Data de publicação | Edição |    ISBN    | Volume | Idioma')
-        print('--------|--------------------------|-------------------------|---------|--------------------|--------|------------|--------|-------')
+        print('---------------------------------------------------------------------------------------------------------------------------')
         for i in range (0, len(livros_obj)):
-            print(f' {livros_obj[i][0]} |          {livros_obj[i][1]}          |          {autor}          | {livros_obj[i][2]} | {livros_obj[i][3]} | {livros_obj[i][4]} |    {livros_obj[i][5]}    | {livros_obj[i][6]}| {livros_obj[i][7]}')
-            print('--------|--------------------------|-------------------------|---------|--------------------|--------|------------|--------|-------')
+            print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {autor}   | Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
+            print('---------------------------------------------------------------------------------------------------------------------------')
+
 
                 
 
