@@ -79,6 +79,7 @@ class Menu:
         self.printa_consulta(livros_obj, editora)
         
     def consulta_genero(self):
+
         genero = (input('Digite o gênero do livro: '))
 
         idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
@@ -89,7 +90,7 @@ class Menu:
 
         livro_obj = self.instancia_livraria.pesquisa_por_genero(idAutor)
         self.printa_consulta(livro_obj, genero)
-
+        
         return
         
     def consulta_livro_autor(self):

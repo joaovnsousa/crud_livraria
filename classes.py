@@ -131,6 +131,54 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
 
+    def encontrar_genero_por_autor(self, autor):
+        consulta_autor = f'SELECT idautores FROM autores WHERE nome = "{autor}"'
+        self.cursor.execute(consulta_autor)
+        resultados_autor = self.cursor.fetchone()
+
+        id_autor = resultados_autor[0]
+
+        consulta_livros = f'SELECT fk_idlivros FROM livro_autores WHERE fk_idautores = {id_autor}'
+        self.cursor.execute(consulta_livros)
+        resultados_livros = self.cursor.fetchall()
+
+        print(resultados_livros)
+
+        for resultado_livro in resultados_livros:
+            id_livro = resultado_livro[0]
+            consulta_generos = f'SELECT nome FROM generos INNER JOIN livro_generos ON livro_generos.f_idgeneros = generos.idgeneros WHERE f_idlivros = {id_livro}'
+            self.cursor.execute(consulta_generos)
+            resultados_generos = self.cursor.fetchall()
+
+
+        return resultados_generos
+
+
+    def encontrar_autor_por_genero(self, genero):
+            consulta_genero = f'SELECT idgeneros FROM generos WHERE nome = "{genero}"'
+            self.cursor.execute(consulta_genero)
+            resultado_genero = self.cursor.fetchone()
+
+            id_genero = resultado_genero[0]
+
+            consulta_livros = f'SELECT f_idlivros FROM livro_generos WHERE f_idgeneros = {id_genero}'
+            self.cursor.execute(consulta_livros)
+            resultados_livros = self.cursor.fetchall()
+
+            print(resultados_livros)
+
+            for resultado_livro in resultados_livros:
+                id_livro = resultado_livro[0]
+                consulta_autores = f'SELECT nome FROM autores INNER JOIN livro_autores ON livro_autores.fk_idautores = autores.idautores WHERE fk_idlivros = {id_livro}'
+                                   #f'SELECT nome FROM generos INNER JOIN livro_generos ON livro_generos.f_idgeneros = generos.idgeneros WHERE f_idlivros = {id_livro}'
+                                   #f'SELECT autores.nome FROM autores INNER JOIN livro_autores ON livro_autores.fk_idautores = autores.idautores WHERE livro_autores.fk_idlivros = {id_livro}'
+                self.cursor.execute(consulta_autores)
+                resultados_autores = self.cursor.fetchall()
+
+            
+            return resultados_autores
+
+
 
     #Pesquisa por título de livro
     def pesquisa_por_titulo(self, titulo):
@@ -199,3 +247,4 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+    
