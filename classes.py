@@ -86,7 +86,6 @@ class GerenciaLivraria:
         consulta = f"INSERT INTO autores(nome) VALUES ('{autor}')"
         self.cursor.execute(consulta)
         self.conexao.commit()
-        print('Sucesso!')
 
     def insere_livro_genero(self, id_livro, id_genero):
         consulta = f"INSERT INTO livro_generos (f_idlivros, f_idgeneros) VALUES ('{id_livro}', '{id_genero}')"
@@ -166,7 +165,7 @@ class GerenciaLivraria:
         return resultados    
 
     def pesquisa_id_genero(self, genero):
-        consulta = f'SELECT idgenero FROM generos WHERE nome = "{genero}"'
+        consulta = f'SELECT idgeneros FROM generos WHERE nome = "{genero}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
@@ -189,7 +188,6 @@ class GerenciaLivraria:
         consulta = "SELECT * FROM livros"
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
-        print(resultados)
 
     #Pesquisa um livro específico por id
     def pesquisa_por_id(self, id):
@@ -197,5 +195,3 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
-        
-    
