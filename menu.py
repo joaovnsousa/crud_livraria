@@ -74,7 +74,8 @@ class Menu:
         
     def consulta_livro_autor(self):
         autor = (input('Digite o autor do livro: '))
-        if (self.instancia_livraria.pesquisa_todos_os_autores(autor) == False):
+        consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
+        if (any(autor in tupla for _, tupla in consulta_autores) == False):
             print('Esse autor não existe na base de dados!')
             return
         idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
