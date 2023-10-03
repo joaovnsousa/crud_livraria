@@ -47,7 +47,7 @@ class Menu:
                 return True
             
             case 2:
-                self.consulta_livro_autor()
+                self.consulta_autor()
                 return True
             case 3:
                 self.consulta_genero()
@@ -64,26 +64,24 @@ class Menu:
         return
         
     def consulta_genero(self):
-        genero = (input('Digite o gênero do livro: '))
-        #if (self.instancia_livraria.pesquisa_todos_os_generos())
+        genero = (input('Digite o título do livro: '))
 
-        idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
-        idGenero = idGenero[0][0]
-        livro_obj = self.instancia_livraria.pesquisa_por_genero(idGenero)
-        print(livro_obj)
+        resultado = self.instancia_livraria.pesquisa_por_genero(genero)
+        
+        print(resultado)
 
         return
         
     def consulta_livro_autor(self):
         autor = (input('Digite o autor do livro: '))
-        if (self.instancia_livraria.pesquisa_todos_os_autores() == False):
+        consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
+        if (any(autor in tupla for _, tupla in consulta_autores) == False):
             print('Esse autor não existe na base de dados!')
             return
         idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
         idAutor = idAutor[0][0]
-        livro_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
-        print(livro_obj)
-        
+        livros_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
+        self.printa_consulta(livros_obj, autor)
 
 
     def menu_inserir(self):
@@ -186,7 +184,12 @@ class Menu:
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
             
-#def trata_dados_consulta(self, livro_obj):
+    def printa_consulta(self, livros_obj, autor):
+        print('idlivro |          Título          |          Autor          | Editora | Data de publicação | Edição |    ISBN    | Volume | Idioma')
+        print('--------|--------------------------|-------------------------|---------|--------------------|--------|------------|--------|-------')
+        for i in range (0, len(livros_obj)):
+            print(f' {livros_obj[i][0]} |          {livros_obj[i][1]}          |          {autor}          | {livros_obj[i][2]} | {livros_obj[i][3]} | {livros_obj[i][4]} |    {livros_obj[i][5]}    | {livros_obj[i][6]}| {livros_obj[i][7]}')
+            print('--------|--------------------------|-------------------------|---------|--------------------|--------|------------|--------|-------')
 
                 
 
