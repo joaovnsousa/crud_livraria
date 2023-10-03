@@ -52,6 +52,9 @@ class Menu:
             case 3:
                 self.consulta_genero()
                 return True
+            case 4:
+                self.consulta_editora()
+                return True
 
             case 0:
                 return False
@@ -62,13 +65,29 @@ class Menu:
 
         self.instancia_livraria.pesquisa_por_titulo(titulo)
         return
+    
+   # def get_autor(self):
+        
+
+    def consulta_editora(self):
+        editora = (input('Digite o nome da editora: '))
+
+        livros_obj = self.instancia_livraria.pesquisa_por_editora(editora)
+
+        #idAutor = self.instancia_livraria.pesquisa_id_autor(editora)
+        #idAutor = idAutor[0][0]
+        self.printa_consulta(livros_obj, editora)
         
     def consulta_genero(self):
         genero = (input('Digite o gênero do livro: '))
 
         idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
         idGenero = idGenero[0][0]
-        livro_obj = self.instancia_livraria.pesquisa_por_genero(idGenero)
+
+        idAutor = self.instancia_livraria.pesquisa_id_autor(genero)
+        idAutor = idAutor[0][0]
+
+        livro_obj = self.instancia_livraria.pesquisa_por_genero(idAutor)
         self.printa_consulta(livro_obj, genero)
 
         return

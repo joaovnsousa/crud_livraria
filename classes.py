@@ -117,12 +117,20 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
     
+    
     #Consulta os livros de um determinado autor e retorna um objeto com o nome dos livros
     def consulta_livros_de_um_autor(self, idAutor):
         consulta = f'SELECT * FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = {idAutor}'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+    
+    def consulta_geral(self):
+        consulta = f'SELECT * FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros JOIN autores ON livro_autores.fk_idautores = autores.idautores JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros JOIN generos ON generos.idgeneros = livro_generos.f_idgeneros'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
 
 
     #Pesquisa por título de livro
@@ -146,7 +154,7 @@ class GerenciaLivraria:
         return resultados
 
     def pesquisa_id_autor(self, autor):
-        consulta = f'SELECT idautores FROM autores WHERE nome = "{autor}"'
+        consulta = f'SELECT idautores FROM autores JOIN = "{autor}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
@@ -170,6 +178,9 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
     
+    #def get_autor(self, autor):
+        #consulta = f'SELECT autor FROM autores JOIN livro_autores ON livros.idautores = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = {idAutor}''
+    
     #Pesquisa todas as editoras
     def pesquisa_por_editora(self, editora):
         consulta = f'SELECT * FROM livros WHERE editora = "{editora}"'
@@ -182,12 +193,6 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM livros WHERE idLivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
-
-    #Consulta todos os livros
-    def consultar_livros(self):
-        consulta = "SELECT * FROM livros"
-        self.cursor.execute(consulta)
-        resultados = self.cursor.fetchall()
 
     #Pesquisa um livro específico por id
     def pesquisa_por_id(self, id):
