@@ -25,6 +25,10 @@ class Menu:
                 print('-------------------------------------------')
             case 3:
                 print('-------------------------------------------')
+                
+                self.menu_escolha()
+                return True
+
             case 4:
                 print('-------------------------------------------')
             case 0:
@@ -32,7 +36,49 @@ class Menu:
 
             case _:
                 return "Tente novamente."
+             
+    def menu_escolha(self):
+        print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
+        escolha = int(input('Digite sua escolha: '))
 
+        match escolha:
+            case 1:
+                self.consulta_titulo()
+                return True
+            
+            case 2:
+                self.consulta_autor()
+                return True
+            case 3:
+                self.consulta_genero()
+                return True
+
+            case 0:
+                return False
+        
+
+    def consulta_titulo(self):
+        titulo = (input('Digite o título do livro: '))
+
+        self.instancia_livraria.pesquisa_por_titulo(titulo)
+        return
+        
+    def consulta_genero(self):
+        genero = (input('Digite o título do livro: '))
+
+        resultado = self.instancia_livraria.pesquisa_por_genero(genero)
+        
+        print(resultado)
+
+        return
+        
+    def consulta_autor(self):
+        autor = (input('Digite o autor do livro: '))
+
+        self.instancia_livraria.pesquisa_por_autor(autor)
+        return
+        
+    
 
                 
 
@@ -45,12 +91,28 @@ class Menu:
                 # solicita as informações do livro:
 
                 titulo = input('Título: ')
-                autor = input('Autor: ')
-
-                if not titulo.strip() or not autor.strip():
-                    raise ValueError("Título e autor não podem ser vazios.")
-
-                genero = input('Gênero: ')
+                
+                autores = []
+                consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
+                while True:
+                    input_autor = input('Autor:')
+                    print(input_autor)
+                    if input_autor == '' or any(input_autor in tupla for _, tupla in consulta_autores):
+                        break
+                    autores.append(input_autor)
+                
+                if not titulo.strip():
+                    raise ValueError("Título não pode ser vazios.")
+                
+                genero = []
+                consulta_generos = self.instancia_livraria.pesquisa_todos_os_generos()
+                while True:
+                    input_genero = input('Genero: ')
+                    print(input_genero)
+                    if(input_genero == '' or any(input_genero in tupla for _, tupla in consulta_generos)):
+                        break
+                    genero.append(input_genero)
+                
                 editora = input('Editora: ')
 
                 preco = float(input('Preço: '))
@@ -85,11 +147,11 @@ class Menu:
                 
                 if self.checa_isbn(isbn) == False:
                     raise ValueError("O ISBN deve ser inserido corretamente.")
-                
+
 
                 novo_livro = Livros(
                     titulo,
-                    autor,
+                    autores,
                     genero,
                     editora,
                     preco,
@@ -99,14 +161,11 @@ class Menu:
                     volume,
                     idioma
                 )
-            
-                self.instancia_livraria.inserir_livros(novo_livro)
-                id_ultima_coluna_inserida_livros = self.instancia_livraria.cursor.lastrowid
-                self.instancia_livraria.insere_autor(novo_livro.get_autor())
-                id_ultima_coluna_inserida_autores = self.instancia_livraria.cursor.lastrowid
-                self.instancia_livraria.insere_livro_autores(id_ultima_coluna_inserida_livros, id_ultima_coluna_inserida_autores)
+
+                self.instancia_livro_autor_genero(autores, novo_livro, genero)
+
                 print('Livro inserido com sucesso!')
-                
+
                 return
 
             except ValueError as e:
@@ -142,6 +201,13 @@ class Menu:
             print('O ISBN não pode ter menos de 10 ou 13 dígitos.')
         
         return validacao
+    
+    def instancia_livro_autor_genero(self, autores, livro, generos):
+        self.instancia_livraria.inserir_livros(livro)
+        for i in range (0, len(autores)):
+            self.instancia_livraria.insere_autor(autores[i])
+        for i in range (0, len(generos)):
+            self.instancia_livraria.insere_genero(generos[i])
     
 menu = Menu()
 menu.menu()

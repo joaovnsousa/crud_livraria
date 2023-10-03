@@ -65,7 +65,7 @@ class GerenciaLivraria:
 
     #Insere um livro com todas as informações tirando o autor e o gênero
     def inserir_livros(self, livro):
-        insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 
         parametros = (
             livro.get_titulo(),
@@ -91,7 +91,7 @@ class GerenciaLivraria:
 
     #Insere o gênero do livro na tabela gênero
     def insere_genero(self, genero):
-        consulta = f"INSERT INTO genero(nome) VALUES ('{genero}')"
+        consulta = f"INSERT INTO generos(nome) VALUES ('{genero}')"
         self.cursor.execute(consulta)
         self.conexao.commit()
 
@@ -136,12 +136,24 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
     
+    def pesquisa_todos_os_autores(self):
+        consulta = f'SELECT * FROM autores'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
     #Pesquisa o nome de todos os gêneros (pode ser que seja deletado)
     def pesquisa_por_genero(self, genero):
         consulta = f'SELECT * FROM generos WHERE nome = "{genero}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+    
+    def pesquisa_todos_os_generos(self):
+        consulta = f'SELECT * FROM generos'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados    
     
     #Pesquisa todas as editoras
     def pesquisa_por_editora(self, editora):
