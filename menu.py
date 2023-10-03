@@ -47,8 +47,6 @@ class Menu:
                 titulo = input('Título: ')
                 autor = input('Autor: ')
 
-                self.instancia_livraria.insere_autor(autor)
-
                 if not titulo.strip() or not autor.strip():
                     raise ValueError("Título e autor não podem ser vazios.")
 
@@ -103,9 +101,12 @@ class Menu:
                 )
             
                 self.instancia_livraria.inserir_livros(novo_livro)
-
+                id_ultima_coluna_inserida_livros = self.instancia_livraria.cursor.lastrowid
+                self.instancia_livraria.insere_autor(novo_livro.get_autor())
+                id_ultima_coluna_inserida_autores = self.instancia_livraria.cursor.lastrowid
+                self.instancia_livraria.insere_livro_autores(id_ultima_coluna_inserida_livros, id_ultima_coluna_inserida_autores)
                 print('Livro inserido com sucesso!')
-
+                
                 return
 
             except ValueError as e:

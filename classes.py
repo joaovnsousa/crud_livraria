@@ -103,7 +103,7 @@ class GerenciaLivraria:
 
     #Relaciona o id do autor com o id do livro na tabela livro_autores e insere ambos os ids.
     def insere_livro_autores(self, idLivro, idAutor):
-        consulta = f"INSERT INTO livro_autores (fk_idlivros, fk_idautores) VALUES ('{idLivro, idAutor}')"
+        consulta = f"INSERT INTO livro_autores (fk_idlivros, fk_idautores) VALUES ('{idLivro}', '{idAutor}')"
         self.cursor.execute(consulta)
         self.conexao.commit()
 
