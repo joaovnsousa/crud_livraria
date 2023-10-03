@@ -97,10 +97,10 @@ class Menu:
                 consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
                 while True:
                     input_autor = input('Autor: ')
-                    if(any(input_autor in tupla for _, tupla in consulta_autores)):
+                    if (any(input_autor in tupla for _, tupla in consulta_autores)):
                         print('Esse autor já está disponível no sistema. Caso queira inserir mais um autor, digite seu nome na linha abaixo.')
-                        autores_existentes.append()
-                    if input_autor == '':
+                        autores_existentes.append(input_autor)
+                    if input_autor == '00000':
                         break
                     else:
                         autores.append(input_autor)
