@@ -64,11 +64,13 @@ class Menu:
         return
         
     def consulta_genero(self):
-        genero = (input('Digite o título do livro: '))
+        genero = (input('Digite o gênero do livro: '))
+        #if (self.instancia_livraria.pesquisa_todos_os_generos())
 
-        resultado = self.instancia_livraria.pesquisa_por_genero(genero)
-        
-        print(resultado)
+        idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
+        idGenero = idGenero[0][0]
+        livro_obj = self.instancia_livraria.pesquisa_por_genero(idGenero)
+        print(livro_obj)
 
         return
         

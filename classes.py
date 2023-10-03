@@ -152,8 +152,8 @@ class GerenciaLivraria:
         return resultados
     
     #Pesquisa o nome de todos os gêneros (pode ser que seja deletado)
-    def pesquisa_por_genero(self, genero):
-        consulta = f'SELECT * FROM generos WHERE nome = "{genero}"'
+    def pesquisa_por_genero(self, idGenero):
+        consulta = f'SELECT * FROM livros JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros WHERE livro_generos.f_idgeneros = {idGenero}'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
