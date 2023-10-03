@@ -129,6 +129,7 @@ class Menu:
                 isbn = input('ISBN: ')
                 
                 volume = int(input('Volume: '))
+
                 if volume < 0:
                     raise ValueError("O volume não pode ser um número negativo. Digite 0 caso não haja volume.")
                
@@ -204,10 +205,14 @@ class Menu:
     
     def instancia_livro_autor_genero(self, autores, livro, generos):
         self.instancia_livraria.inserir_livros(livro)
-        for i in range (0, len(autores)):
+        for autor in autores:
+            self.instancia_livraria.insere_autor(autor)
+        for genero in generos:
+            self.instancia_livraria.insere_genero(genero)
+        '''for i in range (0, len(autores)):
             self.instancia_livraria.insere_autor(autores[i])
         for i in range (0, len(generos)):
-            self.instancia_livraria.insere_genero(generos[i])
+            self.instancia_livraria.insere_genero(generos[i])'''
     
 menu = Menu()
 menu.menu()
