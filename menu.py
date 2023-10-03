@@ -26,7 +26,7 @@ class Menu:
             case 3:
                 print('-------------------------------------------')
                 
-                self.menu_escolha()
+                self.menu_escolha_consulta()
                 return True
 
             case 4:
@@ -37,7 +37,7 @@ class Menu:
             case _:
                 return "Tente novamente."
              
-    def menu_escolha(self):
+    def menu_escolha_consulta(self):
         print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
         escolha = int(input('Digite sua escolha: '))
 
