@@ -72,13 +72,16 @@ class Menu:
 
         return
         
-    def consulta_autor(self):
+    def consulta_livro_autor(self):
         autor = (input('Digite o autor do livro: '))
+        if (self.instancia_livraria.pesquisa_todos_os_autores(autor) == False):
+            print('Esse autor não existe na base de dados!')
+            return
+        idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
+        idAutor = idAutor[0][0]
+        livro_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
+        print(livro_obj)
 
-        self.instancia_livraria.pesquisa_por_autor(autor)
-        return
-        
-    
 
     def menu_inserir(self):
         print('Insira abaixo as informações do livro: ')
@@ -180,6 +183,7 @@ class Menu:
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
             
+    def trata_dados_consulta(self, livro_obj):
 
                 
 
