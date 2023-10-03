@@ -64,11 +64,12 @@ class Menu:
         return
         
     def consulta_genero(self):
-        genero = (input('Digite o título do livro: '))
+        genero = (input('Digite o gênero do livro: '))
 
-        resultado = self.instancia_livraria.pesquisa_por_genero(genero)
-        
-        print(resultado)
+        idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
+        idGenero = idGenero[0][0]
+        livro_obj = self.instancia_livraria.pesquisa_por_genero(idGenero)
+        self.printa_consulta(livro_obj, genero)
 
         return
         
@@ -187,7 +188,7 @@ class Menu:
     def printa_consulta(self, livros_obj, autor):
         print('---------------------------------------------------------------------------------------------------------------------------')
         for i in range (0, len(livros_obj)):
-            print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {autor}   | Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
+            print(f'id: {livros_obj[i][0]} |Título: {livros_obj[i][1]}| Autor: {autor} |Gênero:  Editora: {livros_obj[i][2]} | Preço: R${livros_obj[i][3]} | Data de Publicação: {livros_obj[i][4]} | Edição: {livros_obj[i][5]}| ISBN: {livros_obj[i][6]}| Volume: {livros_obj[i][7]} | Idioma: {livros_obj[i][8]}')
             print('---------------------------------------------------------------------------------------------------------------------------')
 
 
