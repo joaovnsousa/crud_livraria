@@ -80,9 +80,6 @@ class Menu:
         
     
 
-                
-
-
     def menu_inserir(self):
         print('Insira abaixo as informações do livro: ')
 
@@ -97,7 +94,7 @@ class Menu:
                 consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
                 while True:
                     input_autor = input('Autor: ')
-                    if (any(input_autor in tupla for _, tupla in consulta_autores)):
+                    if any(input_autor in tupla for _, tupla in consulta_autores):
                         print('Esse autor já está disponível no sistema. Caso queira inserir mais um autor, digite seu nome na linha abaixo.')
                         autores_existentes.append(input_autor)
                     if input_autor == '00000':
@@ -109,11 +106,13 @@ class Menu:
                     raise ValueError("Título não pode ser vazios.")
                 
                 genero = []
+                generos_existentes = []
                 consulta_generos = self.instancia_livraria.pesquisa_todos_os_generos()
                 while True:
                     input_genero = input('Genero: ')
-                    print(input_genero)
-                    if(input_genero == '' or any(input_genero in tupla for _, tupla in consulta_generos)):
+                    if any(input_genero in tupla for _, tupla in consulta_generos):
+                        generos_existentes.append(input_genero)
+                    if input_genero == '00000':
                         break
                     genero.append(input_genero)
                 
@@ -167,7 +166,7 @@ class Menu:
                     idioma
                 )
 
-                self.instancia_livro_autor_genero(autores, novo_livro, genero)
+                self.instancia_livro_autor_genero(autores, novo_livro, genero, autores_existentes, generos_existentes)
 
                 print('Livro inserido com sucesso!')
 
@@ -207,14 +206,24 @@ class Menu:
         
         return validacao
     
-    def instancia_livro_autor_genero(self, autores, livro, generos):
+    def instancia_livro_autor_genero(self, autores, livro, generos, autores_existentes, generos_existentes):
         self.instancia_livraria.inserir_livros(livro)
         idLivro = self.instancia_livraria.cursor.lastrowid
         print(idLivro)
         for autor in autores:
             self.instancia_livraria.insere_autor(autor)
+            idAutor = self.instancia_livraria.cursor.lastrowid
+            self.instancia_livraria.insere_livro_autores(idLivro, idAutor)
+        for autor in autores_existentes:
+            idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
+            self.instancia_livraria.insere_livro_autores(idLivro, idAutor)
         for genero in generos:
             self.instancia_livraria.insere_genero(genero)
+            idGenero = self.instancia_livraria.cursor.lastrowid
+            self.instancia_livraria.insere_livro_generos(idLivro, idGenero)
+        for genero in generos_existentes:
+            idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
+            self.instancia_livraria.insere_livro_genero(idLivro, idGenero)
         '''for i in range (0, len(autores)):
             self.instancia_livraria.insere_autor(autores[i])
         for i in range (0, len(generos)):

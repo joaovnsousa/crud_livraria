@@ -88,6 +88,10 @@ class GerenciaLivraria:
         self.conexao.commit()
         print('Sucesso!')
 
+    def insere_livro_genero(self, id_livro, id_genero):
+        consulta = f"INSERT INTO livro_generos (f_idlivros, f_idgeneros) VALUES ('{id_livro}', '{id_genero}')"
+        self.cursor.execute(consulta)
+        self.conexao.commit()
 
     #Insere o gênero do livro na tabela gênero
     def insere_genero(self, genero):
@@ -141,6 +145,12 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+
+    def pesquisa_id_autor(self, autor):
+        consulta = f'SELECT idautores FROM autores WHERE nome = "{autor}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
     
     #Pesquisa o nome de todos os gêneros (pode ser que seja deletado)
     def pesquisa_por_genero(self, genero):
@@ -154,6 +164,12 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados    
+
+    def pesquisa_id_genero(self, genero):
+        consulta = f'SELECT idgenero FROM generos WHERE nome = "{genero}"'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
     
     #Pesquisa todas as editoras
     def pesquisa_por_editora(self, editora):
