@@ -15,7 +15,7 @@ def menu(create, read, update, delete):
     print('Olá! Seja bem-vindo ao Los Libros Hermanos.')
     print('-------------------------------------------')
     print('Digite o número correspondente às seguintes opções:')
-    print('1: Inserir um novo livro')
+    print('1: Inserir')
     print('2: Atualizar os dados de algum livro')
     print('3: Consultar um livro')
     print('4: Remover um livro')
@@ -302,15 +302,15 @@ def menu_inserir_autor(create, read):
         id_autor_novo = 0
 
         input_autor = input("Digite o nome do autor: ")
-
+        print('Caso deseje parar de inserir um autor, digite "Acabou"')
         if any(input_autor in tupla for _, tupla in consulta_autores):
             condicao = False
-        elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != '00000':
+        elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != 'Acabou':
             condicao = True
             create.insere_autor(input_autor)
             id_autor_novo = create.gerencia_livraria.cursor.lastrowid
             
-        elif input_autor == '00000':
+        elif input_autor == 'Acabou':
             condicao = False
 
         while condicao == True:
@@ -330,15 +330,16 @@ def menu_inserir_genero(create, read):
         id_genero_novo = 0
 
         input_genero = input("Digite o gênero do livro: ")
+        print('Caso deseje parar de inserir um gênero, digite "Acabou"')
 
         if any(input_genero in tupla for _, tupla in consulta_generos):
             condicao = False
-        elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != '00000':
+        elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != 'Acabou':
             condicao = True
             create.insere_genero(input_genero)
             id_genero_novo = create.gerencia_livraria.cursor.lastrowid
             
-        elif input_genero == '00000':
+        elif input_genero == 'Acabou':
             condicao = False
 
         while condicao == True:
@@ -365,11 +366,12 @@ def menu_inserir_livro(create, read):
             consulta_autores = read.pesquisa_todos_os_autores()
             while True:
                 input_autor = input('Autor: ')
+                print('Caso deseje parar de inserir um autor, digite "Acabou"')
                 if any(input_autor in tupla for _, tupla in consulta_autores):
                     autores_existentes.append(input_autor)
-                elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != '00000':
+                elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != 'Acabou':
                     autores.append(input_autor)
-                elif input_autor == '00000':
+                elif input_autor == 'Acabou':
                     break
             
             if not titulo.strip():
@@ -380,11 +382,12 @@ def menu_inserir_livro(create, read):
             consulta_generos = read.pesquisa_todos_os_generos()
             while True:
                 input_genero = input('Genero: ')
+                print('Caso deseje parar de inserir um gênero, digite "Acabou"')
                 if any(input_genero in tupla for _, tupla in consulta_generos):
                     generos_existentes.append(input_genero)
-                elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != '00000':
+                elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != 'Acabou':
                     genero.append(input_genero)
-                elif input_genero == '00000':
+                elif input_genero == 'Acabou':
                     break
             
             editora = input('Editora: ')
