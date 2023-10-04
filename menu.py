@@ -247,14 +247,12 @@ def consulta_livro_autor(read):
     autor = (input('Digite o autor do livro: '))
     table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
     tabela = PrettyTable(table_rows)
-
     get_id = read.pesquisa_id_autor(autor)
     get_id = get_id[0][0]
 
     consulta_livros_nome = read.pesquisa_por_autor(get_id)
     consulta_autores = []
     idlivros = []
-    
     
     for objeto in consulta_livros_nome:
         idlivros.append(objeto[0])
@@ -270,6 +268,7 @@ def consulta_livro_autor(read):
     for id in idlivros2:
         consulta_generos.append(read.consulta_generos_de_um_livro(id))
     tabela.add_column('Gêneros', consulta_generos)
+    print (tabela)
     return
     
 def menu_inserir_geral(create, read):
