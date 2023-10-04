@@ -43,7 +43,7 @@ def menu(create, read, update, delete):
             return False
 
         case _:
-            return "Tente novamente."
+            return False
         
 def tabelao(read):
     table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
@@ -533,4 +533,7 @@ def instancia_livro_autor_genero(autores, livro, generos, autores_existentes, ge
         create.insere_livro_genero(idLivro, idGenero[0][0])
 
 tabelao(read)
-menu(create, read, update, delete)
+while True:
+    booleano = menu(create, read, update, delete)
+    if booleano == False:
+        break
