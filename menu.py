@@ -65,8 +65,8 @@ class Menu:
     def menu_atualizar(self):
         self.tabelao()
         idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
-        print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n5: Preço\n\
-              6: Data de publicação\n7: Edição\n8: ISBN\n 9: Volume\n 10: Idioma\n0: Voltar')
+        print('Por qual desses deseja fazer a atualização?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n5: Preço\n\
+              6: Data de publicação\n7: Edição\n8: ISBN\n 9: Volume\n 10: Idioma\n0: Sair')
         escolha = int(input('Digite sua escolha: '))
 
         match escolha:
@@ -74,9 +74,54 @@ class Menu:
                 titulo_atualizado = input('Digite o novo nome do título do livro: ')
                 self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
                 print("Título atualizado com sucesso!")
-                return True                
-        
+                return True
 
+            case 4:
+                preco_atualizado = input('Digite o novo nome da editora do livro: ')
+                self.instancia_livraria.atualiza_editora_livro(idlivro, preco_atualizado)
+                print("Editora atualizada com sucesso!")
+                return True                
+
+            case 5:
+                preco_atualizado = float(input('Digite o novo preco do livro: '))
+                self.instancia_livraria.atualiza_preco_livro(idlivro, preco_atualizado)
+                print("Preco atualizado com sucesso!")
+                return True
+
+            case 6:
+                data_atualizada = input('Digite a nova data de publicação (AAAA-MM-DD) do livro: ')
+                self.instancia_livraria.atualiza_data_publicacao_livro(idlivro, data_atualizada)
+                print("Data atualizada com sucesso!")
+                return True
+            
+            case 7:
+                edicao_atualizada = int(input('Digite a nova edição do livro: '))
+                self.instancia_livraria.atualiza_edicao_livro(idlivro, edicao_atualizada)
+                print("Edição atualizada com sucesso!")
+                return True
+            
+            case 8:
+                isbn_atualizado = input('Digite o isbn do livro: ')
+                self.instancia_livraria.atualiza_isbn_livro(idlivro, isbn_atualizado)
+                print("ISBN atualizado com sucesso!")
+                return True
+            
+            case 9:
+                volume_atualizado = int(input('Digite o novo volume do livro: '))
+                self.instancia_livraria.atualiza_volume_livro(idlivro, volume_atualizado)
+                print("Volume atualizado com sucesso!")
+                return True
+            
+            case 10:
+                idioma_atualizado = input('Digite o novo idioma do livro: ')
+                self.instancia_livraria.atualiza_idioma_livro(idlivro, idioma_atualizado)
+                print("Edição atualizada com sucesso!")
+                return True
+            
+            case 0:
+                return False
+
+            
     def menu_remove_livro(self):
         self.tabelao()
         idlivro = int(input('Digite o ID de qual você deseja remover: '))
