@@ -138,6 +138,10 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         self.conexao.commit()
 
+    def atualiza_nome_autor(self, nome, nome_antigo):
+        consulta = f'UPDATE autores SET nome = {nome} WHERE nome = {nome_antigo}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
 
     #Relaciona o id do autor com o id do livro na tabela livro_autores e insere ambos os ids.
     def insere_livro_autores(self, idLivro, idAutor):
@@ -324,3 +328,4 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM generos WHERE idgeneros = {idgenero}'
         self.cursor.execute(consulta)
         self.conexao.commit()
+    

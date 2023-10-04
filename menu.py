@@ -75,6 +75,9 @@ class Menu:
                 self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
                 print("Título atualizado com sucesso!")
                 return True
+            
+            case 2:
+                self.atualiza_autor(idlivro)
 
             case 4:
                 preco_atualizado = input('Digite o novo nome da editora do livro: ')
@@ -199,6 +202,12 @@ class Menu:
         print(tabela)
         return
     
+    def atualiza_autor(self, idlivro):
+        autores = self.gerencia_livraria.consulta_autores_de_um_livro(idlivro)
+        for autor in autores:
+            nome_novo = input('Digite o novo nome do autor:')
+            self.gerencia_livraria.atualiza_nome_autor(nome_novo, autor)
+
     def consulta_genero(self):
         genero = (input('Digite o gênero do livro: '))
         #print(genero)
