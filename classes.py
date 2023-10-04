@@ -139,7 +139,12 @@ class GerenciaLivraria:
         self.conexao.commit()
 
     def atualiza_nome_autor(self, nome, nome_antigo):
-        consulta = f'UPDATE autores SET nome = {nome} WHERE nome = {nome_antigo}'
+        consulta = f'UPDATE autores SET nome = "{nome}" WHERE nome = "{nome_antigo}"'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_nome_genero(self, nome, nome_antigo):
+        consulta = f'UPDATE generos SET nome = "{nome}" WHERE nome = "{nome_antigo}"'
         self.cursor.execute(consulta)
         self.conexao.commit()
 
@@ -160,7 +165,6 @@ class GerenciaLivraria:
         consulta = f'SELECT generos.nome FROM generos JOIN livro_generos ON generos.idgeneros = livro_generos.f_idgeneros WHERE livro_generos.f_idlivros = {idLivro}'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
-        print(resultados)
         return resultados
     
     
@@ -181,8 +185,6 @@ class GerenciaLivraria:
         consulta_livros = f'SELECT fk_idlivros FROM livro_autores WHERE fk_idautores = {id_autor}'
         self.cursor.execute(consulta_livros)
         resultados_livros = self.cursor.fetchall()
-
-        print(resultados_livros)
 
         for resultado_livro in resultados_livros:
             id_livro = resultado_livro[0]
@@ -205,8 +207,6 @@ class GerenciaLivraria:
             consulta_livros = f'SELECT f_idlivros FROM livro_generos WHERE f_idgeneros = {id_genero}'
             self.cursor.execute(consulta_livros)
             resultados_livros = self.cursor.fetchall()
-
-            print(resultados_livros)
 
             for resultado_livro in resultados_livros:
                 id_livro = resultado_livro[0]
@@ -328,4 +328,3 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM generos WHERE idgeneros = {idgenero}'
         self.cursor.execute(consulta)
         self.conexao.commit()
-    

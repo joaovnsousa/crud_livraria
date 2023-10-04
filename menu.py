@@ -79,6 +79,9 @@ class Menu:
             case 2:
                 self.atualiza_autor(idlivro)
 
+            case 3:
+                self.atualiza_genero(idlivro)
+
             case 4:
                 preco_atualizado = input('Digite o novo nome da editora do livro: ')
                 self.instancia_livraria.atualiza_editora_livro(idlivro, preco_atualizado)
@@ -123,12 +126,6 @@ class Menu:
             
             case 0:
                 return False
-
-            
- #   def menu_remove_livro(self):
-  #      idlivro = int(input('Digite o ID de qual você deseja remover: '))
-   #     self.instancia_livraria.remove_livro_(idlivro)
-    #    print('Sucesso!')
 
     def menu_escolha_consulta(self):
         print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
@@ -203,10 +200,17 @@ class Menu:
         return
     
     def atualiza_autor(self, idlivro):
-        autores = self.gerencia_livraria.consulta_autores_de_um_livro(idlivro)
+        autores = self.instancia_livraria.consulta_autores_de_um_livro(idlivro)
         for autor in autores:
             nome_novo = input('Digite o novo nome do autor:')
-            self.gerencia_livraria.atualiza_nome_autor(nome_novo, autor)
+            self.instancia_livraria.atualiza_nome_autor(nome_novo, autor[0])
+
+    def atualiza_genero(self, idlivro):
+        generos = self.instancia_livraria.consulta_generos_de_um_livro(idlivro)
+        for genero in generos:
+            genero_novo = input("Digite o novo gênero: ")
+            self.instancia_livraria.atualiza_nome_genero(genero_novo, genero[0])
+            print("Dados atualizados!")
 
     def consulta_genero(self):
         genero = (input('Digite o gênero do livro: '))
@@ -220,8 +224,6 @@ class Menu:
         consulta_livros_nome = self.instancia_livraria.pesquisa_por_genero(get_id)
         consulta_autores = []
         idlivros = []
-
-        print(consulta_livros_nome)
         
         
         for objeto in consulta_livros_nome:
@@ -243,7 +245,6 @@ class Menu:
 
     def consulta_livro_autor(self):
         autor = (input('Digite o autor do livro: '))
-        #print(genero)
         table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
         tabela = PrettyTable(table_rows)
 
@@ -253,8 +254,6 @@ class Menu:
         consulta_livros_nome = self.instancia_livraria.pesquisa_por_autor(get_id)
         consulta_autores = []
         idlivros = []
-
-        print(consulta_livros_nome)
         
         
         for objeto in consulta_livros_nome:
@@ -271,7 +270,6 @@ class Menu:
         for id in idlivros2:
             consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
         tabela.add_column('Gêneros', consulta_generos)
-        print(tabela)
         return
         
     def menu_inserir_geral(self):
