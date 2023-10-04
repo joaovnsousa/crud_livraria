@@ -116,6 +116,12 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
     
+    def consulta_generos_de_um_livro(self, idLivro):
+        consulta = f'SELECT generos.nome FROM generos JOIN livro_generos ON generos.idgeneros = livro_generos.f_idgeneros WHERE livro_generos.f_idlivros = {idLivro}'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
+    
     
     #Consulta os livros de um determinado autor e retorna um objeto com o nome dos livros
     def consulta_livros_de_um_autor(self, idAutor):
@@ -125,7 +131,26 @@ class GerenciaLivraria:
         return resultados
     
     def consulta_geral(self):
-        consulta = f'SELECT * FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros JOIN autores ON livro_autores.fk_idautores = autores.idautores JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros JOIN generos ON generos.idgeneros = livro_generos.f_idgeneros'
+        consulta = f'''SELECT livros.idlivros AS "ID do Livro",
+    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS "Autores",
+    livros.idioma AS "Idioma",
+    livros.isbn AS "ISBN",
+    livros.edicao AS "Edição",
+    livros.volume AS "Volume",
+    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS "Gêneros",
+    livros.titulo AS "Título do Livro"
+FROM
+    livros
+LEFT JOIN
+    livro_autores ON livros.idlivros = livro_autores.fk_idlivros
+LEFT JOIN
+    autores ON livro_autores.fk_idautores = autores.idautores
+LEFT JOIN
+    livro_generos ON livros.idlivros = livro_generos.f_idlivros
+LEFT JOIN
+    generos ON livro_generos.f_idgeneros = generos.idgeneros
+GROUP BY 
+    livros.idlivros '''
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
@@ -151,6 +176,7 @@ class GerenciaLivraria:
 
 
         return resultados_generos
+
 
 
     def encontrar_autor_por_genero(self, genero):
@@ -185,6 +211,12 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+    
+    def pesquisa_todos_os_livros(self):
+        consulta = f'SELECT * FROM livros'
+        self.cursor.execute(consulta)
+        resultados = self.cursor.fetchall()
+        return resultados
 
     #Pesquisa o nome de todos os autores (pode ser que seja deletado)
     def pesquisa_por_autor(self, autor):
@@ -204,10 +236,13 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+
+    def pesquisa_nome_autor_idlivro(self, idlivro):
+        consulta = f'SELECT fk_idautores FROM livro_autores WHERE livro_autores.fk_idlivro = {idlivro} JOIN '
     
     #Pesquisa o nome de todos os gêneros (pode ser que seja deletado)
     def pesquisa_por_genero(self, idGenero):
-        consulta = f'SELECT * FROM livros JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros WHERE livro_generos.f_idgeneros = {idGenero}'
+        consulta = f'SELECT DISTINCT livros.idlivros, livros.titulo, livros.editora, livros.preco, livros.data_publicacao, livros.edicao, livros.isbn, livros.volume, livros.idioma FROM livros JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros WHERE livro_generos.f_idgeneros = "{idGenero}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados

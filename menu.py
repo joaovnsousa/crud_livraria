@@ -41,11 +41,26 @@ class Menu:
     
                 
     def tabelao(self):
-        tabela = PrettyTable()
-        tabela.field_names = ["Título", "Autor", "Gênero", "Editora", "Preço", "Data de Publicação", "Edição", "ISBN", "Volume", "Idioma"]
+        table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+        tabela = PrettyTable(table_rows)
+        consulta_livros = self.instancia_livraria.pesquisa_todos_os_livros()
+        consulta_autores = []
+        idlivros = []
+        for objeto in consulta_livros:
+            idlivros.append(objeto[0])
+            tabela.add_row(objeto)
+        for id in idlivros:
+            consulta_autores.append(self.instancia_livraria.consulta_autores_de_um_livro(id))
+        tabela.add_column('Autores', consulta_autores)
+        consulta_generos = []
+        idlivros2 = []
+        for objeto in consulta_livros:
+            idlivros2.append(objeto[0])
+        for id in idlivros2:
+            consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
+        tabela.add_column('Gêneros', consulta_generos)
 
-        print(tabela)        
-    
+        print(tabela)
 
     def menu_atualizar(self):
         print(self.instancia_livraria.consulta_geral())
@@ -86,50 +101,88 @@ class Menu:
 
     def consulta_titulo(self):
         titulo = (input('Digite o título do livro: '))
-
-        self.instancia_livraria.pesquisa_por_titulo(titulo)
+        table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+        tabela = PrettyTable(table_rows)
+        consulta_livros_nome = self.instancia_livraria.pesquisa_por_titulo(titulo)
+        consulta_autores = []
+        idlivros = []
+        for objeto in consulta_livros_nome:
+            idlivros.append(objeto[0])
+            tabela.add_row(objeto)
+        for id in idlivros:
+            consulta_autores.append(self.instancia_livraria.consulta_autores_de_um_livro(id))
+        tabela.add_column('Autores', consulta_autores)
+        consulta_generos = []
+        idlivros2 = []
+        for objeto in consulta_livros_nome:
+            idlivros2.append(objeto[0])
+        for id in idlivros2:
+            consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
+        tabela.add_column('Gêneros', consulta_generos)
+        print(tabela)
         return
     
    # def get_autor(self):
         
 
     def consulta_editora(self):
-        editora = (input('Digite o nome da editora: '))
-
-        livros_obj = self.instancia_livraria.pesquisa_por_editora(editora)
-
-        #idAutor = self.instancia_livraria.pesquisa_id_autor(editora)
-        #idAutor = idAutor[0][0]
-        self.printa_consulta(livros_obj, editora)
-        
-    def consulta_genero(self):
-
-        genero = (input('Digite o gênero do livro: '))
-
-        idGenero = self.instancia_livraria.pesquisa_id_genero(genero)
-        idGenero = idGenero[0][0]
-
-        idAutor = self.instancia_livraria.pesquisa_id_autor(genero)
-        idAutor = idAutor[0][0]
-
-        livro_obj = self.instancia_livraria.pesquisa_por_genero(idAutor)
-        self.printa_consulta(livro_obj, genero)
-        
+        editora = (input('Digite a editora do livro: '))
+        table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+        tabela = PrettyTable(table_rows)
+        consulta_livros_nome = self.instancia_livraria.pesquisa_por_editora(editora)
+        consulta_autores = []
+        idlivros = []
+        for objeto in consulta_livros_nome:
+            idlivros.append(objeto[0])
+            tabela.add_row(objeto)
+        for id in idlivros:
+            consulta_autores.append(self.instancia_livraria.consulta_autores_de_um_livro(id))
+        tabela.add_column('Autores', consulta_autores)
+        consulta_generos = []
+        idlivros2 = []
+        for objeto in consulta_livros_nome:
+            idlivros2.append(objeto[0])
+        for id in idlivros2:
+            consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
+        tabela.add_column('Gêneros', consulta_generos)
+        print(tabela)
         return
+    
+    def consulta_genero(self):
+        genero = (input('Digite o gênero do livro: '))
+        #print(genero)
+        table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+        tabela = PrettyTable(table_rows)
+
+        get_id = self.instancia_livraria.pesquisa_id_genero(genero)
+        get_id = get_id[0][0]
+
+        consulta_livros_nome = self.instancia_livraria.pesquisa_por_genero(get_id)
+        consulta_autores = []
+        idlivros = []
+
+        print(consulta_livros_nome)
         
-    def consulta_livro_autor(self):
-        autor = (input('Digite o autor do livro: '))
-        consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
-        if (any(autor in tupla for _, tupla in consulta_autores) == False):
-            print('Esse autor não existe na base de dados!')
-            return
-        print('a')
-        idAutor = self.instancia_livraria.pesquisa_id_autor(autor)
-        idAutor = idAutor[0][0]
-        print('b')
-        livros_obj = self.instancia_livraria.consulta_livros_de_um_autor(idAutor)
-        print('c')
-        self.printa_consulta(livros_obj, autor, 1)
+        
+        for objeto in consulta_livros_nome:
+            idlivros.append(objeto[0])
+            tabela.add_row(objeto)
+
+        for id in idlivros:
+            consulta_autores.append(self.instancia_livraria.consulta_autores_de_um_livro(id))
+        tabela.add_column('Autores', consulta_autores)
+        consulta_generos = []
+        idlivros2 = []
+        for objeto in consulta_livros_nome:
+            idlivros2.append(objeto[0])
+        for id in idlivros2:
+            consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
+        tabela.add_column('Gêneros', consulta_generos)
+        print(tabela)
+        return
+
+#    def consulta_livro_autor(self):
+        
 
 
     def menu_inserir(self):
@@ -152,9 +205,6 @@ class Menu:
                         autores.append(input_autor)
                     elif input_autor == '00000':
                         break
-                
-                print(autores)
-                print(autores_existentes)
                 
                 if not titulo.strip():
                     raise ValueError("Título não pode ser vazios.")
@@ -278,5 +328,5 @@ class Menu:
             self.instancia_livraria.insere_livro_genero(idLivro, idGenero[0][0])
     
 menu = Menu()
-print(menu.instancia_livraria.consulta_geral())
+menu.tabelao()
 menu.menu()
