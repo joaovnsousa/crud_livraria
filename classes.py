@@ -304,3 +304,14 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
     
+    def remove_autor(self, idautor):
+        self.remove_livro_de_livroAutores(idautor)
+        consulta = f'DELETE FROM autores WHERE idautores = {idautor}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+    
+    def remove_genero(self, idgenero):
+        self.remove_livro_de_livroGenero(idgenero)
+        consulta = f'DELETE FROM generos WHERE idgeneros = {idgenero}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
