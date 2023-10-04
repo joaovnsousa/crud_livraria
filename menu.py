@@ -1,5 +1,5 @@
 from classes import Livros, GerenciaLivraria
-
+from prettytable import PrettyTable
 class Menu:
     def __init__(self):
         self.livro_instanciado = None
@@ -39,6 +39,14 @@ class Menu:
             case _:
                 return "Tente novamente."
     
+                
+    def tabelao(self):
+        tabela = PrettyTable()
+        tabela.field_names = ["Título", "Autor", "Gênero", "Editora", "Preço", "Data de Publicação", "Edição", "ISBN", "Volume", "Idioma"]
+
+        print(tabela)        
+    
+
     def menu_atualizar(self):
         print(self.instancia_livraria.consulta_geral())
         idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
