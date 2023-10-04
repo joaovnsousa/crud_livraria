@@ -63,10 +63,18 @@ class Menu:
         print(tabela)
 
     def menu_atualizar(self):
-        print(self.instancia_livraria.consulta_geral())
+        self.tabelao()
         idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
-        titulo_atualizado = input('Digite o novo nome do título do livro: ')
-        self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
+        print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n5: Preço\n\
+              6: Data de publicação\n7: Edição\n8: ISBN\n 9: Volume\n 10: Idioma\n0: Voltar')
+        escolha = int(input('Digite sua escolha: '))
+
+        match escolha:
+            case 1:
+                titulo_atualizado = input('Digite o novo nome do título do livro: ')
+                self.instancia_livraria.atualiza_titulo_livro(idlivro, titulo_atualizado)
+                print("Título atualizado com sucesso!")
+                return True                
         
 
     def menu_remove_livro(self):

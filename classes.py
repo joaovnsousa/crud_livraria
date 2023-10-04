@@ -129,31 +129,6 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
-    
-    def consulta_geral(self):
-        consulta = f'''SELECT livros.idlivros AS "ID do Livro",
-    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS "Autores",
-    livros.idioma AS "Idioma",
-    livros.isbn AS "ISBN",
-    livros.edicao AS "Edição",
-    livros.volume AS "Volume",
-    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS "Gêneros",
-    livros.titulo AS "Título do Livro"
-FROM
-    livros
-LEFT JOIN
-    livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-LEFT JOIN
-    autores ON livro_autores.fk_idautores = autores.idautores
-LEFT JOIN
-    livro_generos ON livros.idlivros = livro_generos.f_idlivros
-LEFT JOIN
-    generos ON livro_generos.f_idgeneros = generos.idgeneros
-GROUP BY 
-    livros.idlivros '''
-        self.cursor.execute(consulta)
-        resultados = self.cursor.fetchall()
-        return resultados
 
     def encontrar_genero_por_autor(self, autor):
         consulta_autor = f'SELECT idautores FROM autores WHERE nome = "{autor}"'
