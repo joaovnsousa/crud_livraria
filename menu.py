@@ -70,8 +70,7 @@ class Menu:
         
 
     def menu_remove_livro(self):
-        consulta_geral = self.instancia_livraria.consulta_geral()
-        print(consulta_geral)
+        self.tabelao()
         idlivro = int(input('Digite o ID de qual você deseja remover: '))
         self.remove_livro(idlivro, None, 0)
         print('Sucesso!')
