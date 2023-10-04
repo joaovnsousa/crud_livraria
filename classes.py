@@ -103,6 +103,42 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         self.conexao.commit()
 
+    def atualiza_isbn_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET isbn = "{valor}" WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_data_publicacao_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET data_publicacao = "{valor}" WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_volume_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET volume = {valor} WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_idioma_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET idioma = "{valor}" WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_editora_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET editora = "{valor}" WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_preco_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET preco = {valor} WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+    def atualiza_edicao_livro(self, idlivro, valor):
+        consulta = f'UPDATE livros SET edicao = {valor} WHERE idlivros = {idlivro}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
+
     #Relaciona o id do autor com o id do livro na tabela livro_autores e insere ambos os ids.
     def insere_livro_autores(self, idLivro, idAutor):
         consulta = f"INSERT INTO livro_autores (fk_idlivros, fk_idautores) VALUES ('{idLivro}', '{idAutor}')"
