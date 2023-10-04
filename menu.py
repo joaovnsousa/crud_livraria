@@ -18,7 +18,7 @@ class Menu:
         match escolha:
             case 1:
                 print('-------------------------------------------')
-                self.menu_inserir()
+                self.menu_inserir_geral()
                 return True
 
             case 2:
@@ -32,7 +32,7 @@ class Menu:
 
             case 4:
                 print('-------------------------------------------')
-                self.menu_remove_livro()
+                self.menu_remocoes()
             case 0:
                 return False
 
@@ -122,11 +122,10 @@ class Menu:
                 return False
 
             
-    def menu_remove_livro(self):
-        self.tabelao()
-        idlivro = int(input('Digite o ID de qual você deseja remover: '))
-        self.instancia_livraria.remove_livro_(idlivro)
-        print('Sucesso!')
+ #   def menu_remove_livro(self):
+  #      idlivro = int(input('Digite o ID de qual você deseja remover: '))
+   #     self.instancia_livraria.remove_livro_(idlivro)
+    #    print('Sucesso!')
 
     def menu_escolha_consulta(self):
         print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
@@ -266,15 +265,92 @@ class Menu:
         print(tabela)
         return
         
+    def menu_inserir_geral(self):
+        while True:
+                print("1: Livro\n2: Autor\n3: Gênero\n0: Sair")
+                escolha = int(input('Escolha'))
 
 
-    def menu_inserir(self):
-        print('Insira abaixo as informações do livro: ')
+                match escolha:
+                    case 1:
+                        self.menu_inserir_livro()
+                        return True
+                        
 
+                    case 2:
+                        self.menu_inserir_autor()
+                        return True                
+
+                    case 3:
+                        self.menu_inserir_genero()
+                        return True
+
+                    case 0:
+                        return False
+
+    def menu_inserir_autor(self):
+            
+            condicao = False
+            consulta_autores = self.instancia_livraria.pesquisa_todos_os_autores()
+            id_autor_novo = 0
+
+            input_autor = input("Digite o nome do autor: ")
+
+            if any(input_autor in tupla for _, tupla in consulta_autores):
+                condicao = False
+            elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != '00000':
+                condicao = True
+                self.instancia_livraria.insere_autor(input_autor)
+                id_autor_novo = self.instancia_livraria.cursor.lastrowid
+                
+            elif input_autor == '00000':
+                condicao = False
+
+            while condicao == True:
+                
+                escolha = input('Existe algum livro relacionado a esse autor na base dados? ')
+                if escolha == 'sim' or escolha == 'Sim':
+                    self.tabelao()
+                    id_livro_relacionado = input('Digite o id do livro: ')
+                    self.instancia_livraria.insere_livro_autores(id_livro_relacionado, id_autor_novo)
+                if escolha == 'não' or escolha == 'Não':
+                    break
+
+    def menu_inserir_genero(self):
+
+            condicao = False
+            consulta_generos = self.instancia_livraria.pesquisa_todos_os_generos()
+            id_genero_novo = 0
+
+            input_genero = input("Digite o gênero do livro: ")
+
+            if any(input_genero in tupla for _, tupla in consulta_generos):
+                condicao = False
+            elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != '00000':
+                condicao = True
+                self.instancia_livraria.insere_genero(input_genero)
+                id_genero_novo = self.instancia_livraria.cursor.lastrowid
+                
+            elif input_genero == '00000':
+                condicao = False
+
+            while condicao == True:
+                
+                escolha = input('Existe algum livro relacionado a esse gênero na base de dados? ')
+                if escolha == 'sim' or escolha == 'Sim':
+                    self.tabelao()
+                    id_livro_relacionado = input('Digite o id do livro: ')
+                    self.instancia_livraria.insere_livro_genero(id_livro_relacionado, id_genero_novo)
+                    print("Inserido com sucesso!")
+                if escolha == 'não' or escolha == 'Não':
+                    break
+
+
+
+
+    def menu_inserir_livro(self):
         while True:
             try:
-                # solicita as informações do livro:
-
                 titulo = input('Título: ')
                 
                 autores = []
@@ -359,12 +435,53 @@ class Menu:
                 print('Livro inserido com sucesso!')
 
                 return
-
+            
             except ValueError as e:
                 # Captura exceções ValueError quando as entradas são inválidas
                 print(f"Erro: {e}")
                 print("Por favor, forneça entradas válidas.")
+         
+
+                # solicita as informações do livro:
+               
+
+    def menu_remocoes(self):
+                # solicita as informações do livro:
+                self.tabelao()
+
+                print('O que deseja remover?\n1: Livro\n2: Autor\n3: Gênero\n0: Sair')
                 
+                escolha = int(input('Digite sua escolha: '))
+
+
+                match escolha:
+                    case 1:
+                        idlivro = input('Digite o nome do id do livro: ')
+                        self.instancia_livraria.remove_livro_(idlivro)
+                        print("Título removido com sucesso!")
+                        return True
+                        
+
+                    case 2:
+                        autor = input('Digite o nome do autor do livro: ')
+                        idautor = self.instancia_livraria.pesquisa_id_autor(autor)
+                        self.instancia_livraria.remove_autor(idautor[0][0])
+                        print("Autor removido com sucesso!")
+                        return True                
+
+                    case 3:
+                        genero = input('Digite o nome do gênero do livro: ')
+                        idgenero = self.instancia_livraria.pesquisa_id_genero(genero)
+                        self.instancia_livraria.remove_genero(idgenero[0][0])
+                        print("Gênero removido com sucesso!")
+                        return True
+
+                    case 0:
+                        return False
+
+
+
+
 
     @staticmethod
     def verifica_isbn_10(isbn):

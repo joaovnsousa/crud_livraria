@@ -156,6 +156,7 @@ class GerenciaLivraria:
         consulta = f'SELECT generos.nome FROM generos JOIN livro_generos ON generos.idgeneros = livro_generos.f_idgeneros WHERE livro_generos.f_idlivros = {idLivro}'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
+        print(resultados)
         return resultados
     
     
@@ -247,9 +248,6 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
-
-    def pesquisa_nome_autor_idlivro(self, idlivro):
-        consulta = f'SELECT fk_idautores FROM livro_autores WHERE livro_autores.fk_idlivro = {idlivro} JOIN '
     
     #Pesquisa o nome de todos os gêneros (pode ser que seja deletado)
     def pesquisa_por_genero(self, idGenero):
@@ -292,11 +290,22 @@ class GerenciaLivraria:
         consulta = f'DELETE FROM livro_autores WHERE fk_idlivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
+
+    def remove_autor_de_livroAutores(self, id):
+        consulta = f'DELETE FROM livro_autores WHERE fk_idautores = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
     
     def remove_livro_de_livroGenero(self, id):
         consulta = f'DELETE FROM livro_generos WHERE f_idlivros = {id}'
         self.cursor.execute(consulta)
         self.conexao.commit()
+    
+    def remove_genero_de_livroGenero(self, id):
+        consulta = f'DELETE FROM livro_generos WHERE f_idgeneros = {id}'
+        self.cursor.execute(consulta)
+        self.conexao.commit()
+
     #Pesquisa um livro específico por id
     def pesquisa_por_id(self, id):
         consulta = f'SELECT * FROM livros WHERE idLivros = {id}'
@@ -305,13 +314,13 @@ class GerenciaLivraria:
         return resultados
     
     def remove_autor(self, idautor):
-        self.remove_livro_de_livroAutores(idautor)
+        self.remove_autor_de_livroAutores(idautor)
         consulta = f'DELETE FROM autores WHERE idautores = {idautor}'
         self.cursor.execute(consulta)
         self.conexao.commit()
     
     def remove_genero(self, idgenero):
-        self.remove_livro_de_livroGenero(idgenero)
+        self.remove_genero_de_livroGenero(idgenero)
         consulta = f'DELETE FROM generos WHERE idgeneros = {idgenero}'
         self.cursor.execute(consulta)
         self.conexao.commit()
