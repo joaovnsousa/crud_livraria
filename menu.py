@@ -181,7 +181,38 @@ class Menu:
         print(tabela)
         return
 
-#    def consulta_livro_autor(self):
+    def consulta_livro_autor(self):
+        autor = (input('Digite o autor do livro: '))
+        #print(genero)
+        table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+        tabela = PrettyTable(table_rows)
+
+        get_id = self.instancia_livraria.pesquisa_id_autor(autor)
+        get_id = get_id[0][0]
+
+        consulta_livros_nome = self.instancia_livraria.pesquisa_por_autor(get_id)
+        consulta_autores = []
+        idlivros = []
+
+        print(consulta_livros_nome)
+        
+        
+        for objeto in consulta_livros_nome:
+            idlivros.append(objeto[0])
+            tabela.add_row(objeto)
+
+        for id in idlivros:
+            consulta_autores.append(self.instancia_livraria.consulta_autores_de_um_livro(id))
+        tabela.add_column('Autores', consulta_autores)
+        consulta_generos = []
+        idlivros2 = []
+        for objeto in consulta_livros_nome:
+            idlivros2.append(objeto[0])
+        for id in idlivros2:
+            consulta_generos.append(self.instancia_livraria.consulta_generos_de_um_livro(id))
+        tabela.add_column('Gêneros', consulta_generos)
+        print(tabela)
+        return
         
 
 

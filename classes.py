@@ -219,8 +219,8 @@ GROUP BY
         return resultados
 
     #Pesquisa o nome de todos os autores (pode ser que seja deletado)
-    def pesquisa_por_autor(self, autor):
-        consulta = f'SELECT * FROM autores WHERE nome = "{autor}"'
+    def pesquisa_por_autor(self, idAutores):
+        consulta = f'SELECT DISTINCT livros.idlivros, livros.titulo, livros.editora, livros.preco, livros.data_publicacao, livros.edicao, livros.isbn, livros.volume, livros.idioma FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = "{idAutores}"'
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
