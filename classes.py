@@ -99,7 +99,7 @@ class GerenciaLivraria:
         self.conexao.commit()
 
     def atualiza_titulo_livro(self, idlivro, valor):
-        consulta = f'UPDATE livros SET titulo = {valor} WHERE idlivros = {idlivro}'
+        consulta = f'UPDATE livros SET titulo = "{valor}" WHERE idlivros = {idlivro}'
         self.cursor.execute(consulta)
         self.conexao.commit()
 
