@@ -18,11 +18,6 @@ class ReadCRUD:
         consulta = f'SELECT generos.nome FROM generos JOIN livro_generos ON generos.idgeneros = livro_generos.f_idgeneros WHERE livro_generos.f_idlivros = {idLivro}'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
-
-    def consulta_livros_de_um_autor(self, idAutor):
-        consulta = f'SELECT * FROM livros JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros WHERE livro_autores.fk_idautores = {idAutor}'
-        resultado = self.gerencia_livraria.executa_fetch(consulta)
-        return resultado
     
     def pesquisa_por_titulo(self, titulo):
         consulta = f'SELECT * FROM livros WHERE titulo = "{titulo}"'
@@ -74,3 +69,24 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    def pesquisa_geral(self):
+        consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
+    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
+    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
+    livros.editora AS Editora,
+    livros.preco AS Preco,
+    livros.data_publicacao AS DataDePublicação,
+    livros.edicao AS Edição,
+    livros.isbn AS ISBN,
+    livros.volume AS Volume,
+    livros.idioma AS Idioma
+FROM
+    livros
+LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
+LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
+LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
+LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
+GROUP BY
+    livros.idlivros;'''
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado

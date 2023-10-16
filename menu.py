@@ -12,6 +12,10 @@ update = UpdateCRUD(instancia_livraria)
 delete = DeleteCRUD(instancia_livraria)
 
 def menu(create, read, update, delete):
+    global todos_os_livros 
+    todos_os_livros = read.pesquisa_geral()
+    todos_os_livros = lista_de_livros(todos_os_livros)
+    tabelao2(todos_os_livros)
     print('Olá! Seja bem-vindo ao Los Libros Hermanos.')
     print('-------------------------------------------')
     print('Digite o número correspondente às seguintes opções:')
@@ -45,6 +49,23 @@ def menu(create, read, update, delete):
         case _:
             return False
         
+
+def lista_de_livros(livros):
+    lista_livros = []
+    for livro in livros:
+        instancia_livro = Livros(livro[1], livro[2], livro[3], livro[4], livro[5], livro[6], livro[7], livro[8], livro[9], livro[10])
+        instancia_livro.set_id(livro[0])
+        lista_livros.append(instancia_livro)
+    return lista_livros
+
+def tabelao2(livros):
+    table_rows = ['id', 'Título', 'Autores', 'Genero', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+    tabela = PrettyTable(table_rows)
+    for livro in livros:
+        tabela.add_row([livro.get_id(), livro.get_titulo(), livro.get_autor(), livro.get_genero(), livro.get_editora(), livro.get_preco(), 
+                        livro.get_data_publicacao(), livro.get_edicao(), livro.get_isbn(), livro.get_volume(), livro.get_idioma()])
+    print(tabela)
+
 def tabelao(read):
     table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
     tabela = PrettyTable(table_rows)
@@ -68,7 +89,7 @@ def tabelao(read):
     print(tabela)
 
 def menu_atualizar(read, update):
-    tabelao(read)
+    tabelao2(todos_os_livros)
     idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
     print('Por qual desses deseja fazer a atualização?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n5: Preço\n\
             6: Data de publicação\n7: Edição\n8: ISBN\n 9: Volume\n 10: Idioma\n0: Sair')
@@ -272,88 +293,7 @@ def consulta_livro_autor(read):
     return
     
 def menu_inserir_geral(create, read):
-    while True:
-            print("1: Livro\n2: Autor\n3: Gênero\n0: Sair")
-            escolha = int(input('Escolha'))
-
-
-            match escolha:
-                case 1:
-                    menu_inserir_livro(create, read)
-                    return True
-                    
-
-                case 2:
-                    menu_inserir_autor(create, read)
-                    return True                
-
-                case 3:
-                    menu_inserir_genero(create, read)
-                    return True
-
-                case 0:
-                    return False
-
-def menu_inserir_autor(create, read):
-        
-        condicao = False
-        consulta_autores = read.pesquisa_todos_os_autores()
-        id_autor_novo = 0
-
-        input_autor = input("Digite o nome do autor: ")
-        print('Caso deseje parar de inserir um autor, digite "Acabou"')
-        if any(input_autor in tupla for _, tupla in consulta_autores):
-            condicao = False
-        elif not any(input_autor in tupla for _, tupla in consulta_autores) and input_autor != 'Acabou':
-            condicao = True
-            create.insere_autor(input_autor)
-            id_autor_novo = create.gerencia_livraria.cursor.lastrowid
-            
-        elif input_autor == 'Acabou':
-            condicao = False
-
-        while condicao == True:
-            
-            escolha = input('Existe algum livro relacionado a esse autor na base dados? ')
-            if escolha == 'sim' or escolha == 'Sim':
-                tabelao(read)
-                id_livro_relacionado = input('Digite o id do livro: ')
-                create.insere_livro_autores(id_livro_relacionado, id_autor_novo)
-            if escolha == 'não' or escolha == 'Não':
-                break
-
-def menu_inserir_genero(create, read):
-
-        condicao = False
-        consulta_generos = read.pesquisa_todos_os_generos()
-        id_genero_novo = 0
-
-        input_genero = input("Digite o gênero do livro: ")
-        print('Caso deseje parar de inserir um gênero, digite "Acabou"')
-
-        if any(input_genero in tupla for _, tupla in consulta_generos):
-            condicao = False
-        elif not any(input_genero in tupla for _, tupla in consulta_generos) and input_genero != 'Acabou':
-            condicao = True
-            create.insere_genero(input_genero)
-            id_genero_novo = create.gerencia_livraria.cursor.lastrowid
-            
-        elif input_genero == 'Acabou':
-            condicao = False
-
-        while condicao == True:
-            
-            escolha = input('Existe algum livro relacionado a esse gênero na base de dados? ')
-            if escolha == 'sim' or escolha == 'Sim':
-                tabelao(read)
-                id_livro_relacionado = input('Digite o id do livro: ')
-                create.insere_livro_genero(id_livro_relacionado, id_genero_novo)
-                print("Inserido com sucesso!")
-            if escolha == 'não' or escolha == 'Não':
-                break
-
-
-
+    menu_inserir_livro(create, read)
 
 def menu_inserir_livro(create, read):
     while True:
@@ -531,7 +471,7 @@ def instancia_livro_autor_genero(autores, livro, generos, autores_existentes, ge
         idGenero = read.pesquisa_id_genero(genero)
         create.insere_livro_genero(idLivro, idGenero[0][0])
 
-tabelao(read)
+#tabelao(read)
 while True:
     booleano = menu(create, read, update, delete)
     if booleano == False:

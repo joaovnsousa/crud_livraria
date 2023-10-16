@@ -17,6 +17,7 @@ class Livros:
         self.__isbn = isbn
         self.__volume = volume
         self.__idioma = idioma
+        self.__id = 0
 
     def get_titulo(self):
         return self.__titulo
@@ -47,6 +48,12 @@ class Livros:
 
     def get_idioma(self):
         return self.__idioma
+    
+    def get_id(self):
+        return self.__id
+    
+    def set_id(self, id):
+        self.__id = id
     
 class GerenciaLivraria:
     _instance = None
