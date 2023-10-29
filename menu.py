@@ -187,25 +187,9 @@ def consulta_titulo(read):
 
 def consulta_editora(read):
     editora = (input('Digite a editora do livro: '))
-    table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
-    tabela = PrettyTable(table_rows)
-    consulta_livros_nome = read.pesquisa_por_editora(editora)
-    consulta_autores = []
-    idlivros = []
-    for objeto in consulta_livros_nome:
-        idlivros.append(objeto[0])
-        tabela.add_row(objeto)
-    for id in idlivros:
-        consulta_autores.append(read.consulta_autores_de_um_livro(id))
-    tabela.add_column('Autores', consulta_autores)
-    consulta_generos = []
-    idlivros2 = []
-    for objeto in consulta_livros_nome:
-        idlivros2.append(objeto[0])
-    for id in idlivros2:
-        consulta_generos.append(read.consulta_generos_de_um_livro(id))
-    tabela.add_column('Gêneros', consulta_generos)
-    print(tabela)
+    tuplas_livros = read.pesquisa_livros_de_editora(editora)
+    lista_livros = lista_de_livros(tuplas_livros)
+    tabelao2(lista_livros)
     return
 
 def atualiza_autor(read, update, idlivro):
