@@ -184,61 +184,13 @@ def atualiza_genero(read, update, idlivro):
 
 def consulta_genero(read):
     genero = (input('Digite o gênero do livro: '))
-    table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
-    tabela = PrettyTable(table_rows)
-
-    get_id = read.pesquisa_id_genero(genero)
-    get_id = get_id[0][0]
-
-    consulta_livros_nome = read.pesquisa_por_genero(get_id)
-    consulta_autores = []
-    idlivros = []
-    
-    
-    for objeto in consulta_livros_nome:
-        idlivros.append(objeto[0])
-        tabela.add_row(objeto)
-
-    for id in idlivros:
-        consulta_autores.append(read.consulta_autores_de_um_livro(id))
-    tabela.add_column('Autores', consulta_autores)
-    consulta_generos = []
-    idlivros2 = []
-    for objeto in consulta_livros_nome:
-        idlivros2.append(objeto[0])
-    for id in idlivros2:
-        consulta_generos.append(read.consulta_generos_de_um_livro(id))
-    tabela.add_column('Gêneros', consulta_generos)
-    print(tabela)
-    return
+    tuplas_livros = read.pesquisa_livros_por_genero(genero)
+    tabelao2(lista_de_livros(tuplas_livros))
 
 def consulta_livro_autor(read):
     autor = (input('Digite o autor do livro: '))
-    table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
-    tabela = PrettyTable(table_rows)
-    get_id = read.pesquisa_id_autor(autor)
-    get_id = get_id[0][0]
-
-    consulta_livros_nome = read.pesquisa_por_autor(get_id)
-    consulta_autores = []
-    idlivros = []
-    
-    for objeto in consulta_livros_nome:
-        idlivros.append(objeto[0])
-        tabela.add_row(objeto)
-
-    for id in idlivros:
-        consulta_autores.append(read.consulta_autores_de_um_livro(id))
-    tabela.add_column('Autores', consulta_autores)
-    consulta_generos = []
-    idlivros2 = []
-    for objeto in consulta_livros_nome:
-        idlivros2.append(objeto[0])
-    for id in idlivros2:
-        consulta_generos.append(read.consulta_generos_de_um_livro(id))
-    tabela.add_column('Gêneros', consulta_generos)
-    print (tabela)
-    return
+    tuplas_livros = read.pesquisa_livros_de_um_autor(autor)
+    tabelao2(lista_de_livros(tuplas_livros))
     
 def menu_inserir_geral(create, read):
     menu_inserir_livro(create, read)
@@ -344,7 +296,6 @@ def menu_inserir_livro(create, read):
 
 def menu_remocoes(read, delete):
             # solicita as informações do livro:
-            tabelao(read)
 
             print('O que deseja remover?\n1: Livro\n2: Autor\n3: Gênero\n0: Sair')
             
