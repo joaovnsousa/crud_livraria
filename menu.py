@@ -50,6 +50,7 @@ def menu(create, read, update, delete):
             return False
         
 
+#Cria uma lista de livros passada através de uma lista de tuplas após uma consulta
 def lista_de_livros(livros):
     lista_livros = []
     for livro in livros:
@@ -58,6 +59,7 @@ def lista_de_livros(livros):
         lista_livros.append(instancia_livro)
     return lista_livros
 
+#Recebe uma lista de livros e passa seus dados para uma tabela, printando no final
 def tabelao2(livros):
     table_rows = ['id', 'Título', 'Autores', 'Genero', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
     tabela = PrettyTable(table_rows)
@@ -66,7 +68,8 @@ def tabelao2(livros):
                         livro.get_data_publicacao(), livro.get_edicao(), livro.get_isbn(), livro.get_volume(), livro.get_idioma()])
     print(tabela)
 
-def tabelao(read):
+
+def tabelao(read): #remover
     table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
     tabela = PrettyTable(table_rows)
     consulta_livros = read.pesquisa_todos_os_livros()

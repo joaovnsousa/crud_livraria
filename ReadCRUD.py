@@ -69,6 +69,7 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    #Seleciona todos os livros, generos e autores; autores e gêneros são passados cada um como uma string
     def pesquisa_geral(self):
         consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
     GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
@@ -80,13 +81,11 @@ class ReadCRUD:
     livros.isbn AS ISBN,
     livros.volume AS Volume,
     livros.idioma AS Idioma
-FROM
-    livros
-LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
-LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
-LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-GROUP BY
-    livros.idlivros;'''
+    FROM livros
+    LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
+    LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
+    LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
+    LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
+    GROUP BY livros.idlivros;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
