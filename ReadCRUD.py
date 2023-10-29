@@ -106,7 +106,7 @@ class ReadCRUD:
     LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
     LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
     LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-    WHERE livros.titulo = {titulo}
+    WHERE livros.titulo = "{titulo}"
     GROUP BY livros.idlivros;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
