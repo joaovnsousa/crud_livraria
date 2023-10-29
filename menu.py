@@ -68,29 +68,6 @@ def tabelao2(livros):
                         livro.get_data_publicacao(), livro.get_edicao(), livro.get_isbn(), livro.get_volume(), livro.get_idioma()])
     print(tabela)
 
-
-def tabelao(read): #remover
-    table_rows = ['id', 'Título', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
-    tabela = PrettyTable(table_rows)
-    consulta_livros = read.pesquisa_todos_os_livros()
-    consulta_autores = []
-    idlivros = []
-    for objeto in consulta_livros:
-        idlivros.append(objeto[0])
-        tabela.add_row(objeto)
-    for id in idlivros:
-        consulta_autores.append(read.consulta_autores_de_um_livro(id))
-    tabela.add_column('Autores', consulta_autores)
-    consulta_generos = []
-    idlivros2 = []
-    for objeto in consulta_livros:
-        idlivros2.append(objeto[0])
-    for id in idlivros2:
-        consulta_generos.append(read.consulta_generos_de_um_livro(id))
-    tabela.add_column('Gêneros', consulta_generos)
-
-    print(tabela)
-
 def menu_atualizar(read, update):
     tabelao2(todos_os_livros)
     idlivro = int(input('Escolha o id do livro que deseja atualizar dados: '))
