@@ -80,3 +80,97 @@ class GerenciaLivraria:
         self.cursor.execute(consulta)
         resultados = self.cursor.fetchall()
         return resultados
+    
+
+class Cliente:
+    def __init__(self, nome, sobrenome, cpf, prim_telefone, seg_telefone, isFlamengo, isFromSousa, isOnePieceFan):
+        self.__nome = nome
+        self.__sobrenome = sobrenome
+        self.__cpf = cpf
+        self.__prim_telefone = prim_telefone
+        self.__seg_telefone = seg_telefone
+        self.__isFlamengo = isFlamengo
+        self.__isFromSousa = isFromSousa
+        self.__isOnePieceFan = isOnePieceFan
+        self.__livros_comprados = None
+        self.__id = 0
+
+    def get_nome(self):
+        return self.__nome
+    
+    def get_sobrenome(self):
+        return self.__sobrenome
+    
+    def get_cpf(self):
+        return self.__cpf
+    
+    def get_prim_telefone(self):
+        return self.__prim_telefone
+    
+    def get_seg_telefone(self):
+        return self.__seg_telefone
+    
+    def get_isFlamengo(self):
+        return self.__isFlamengo
+    
+    def get_isFromSousa(self):
+        return self.__isFromSousa
+    
+    def get_isOnePieceFan(self):
+        return self.__isOnePieceFan
+    
+    def get_livros_comprados(self):
+        return self.__livros_comprados
+    
+    def set_livros_comprados(self):
+        return self.__livros_comprados
+    
+class Compra:
+    def __init__(self, vendedor, cliente, livros, forma_pagamento, status, data_compra):
+        self.vendedor = vendedor
+        self.cliente = cliente
+        self.livros = livros
+        self.forma_pagamento = forma_pagamento
+        self.status = status
+        self.data_compra = data_compra
+        
+    
+    def total_compra(self):
+        total = 0
+        for livro in self.livros:
+            total = total + livro.get_preco()
+        return total
+    
+    def verifica_cpf(cpf):
+        digito1 = False
+        digito2 = False
+        cpf = cpf.replace('-', ''.replace(' ', ''))
+        cpf = cpf.replace('.', ''.replace(' ', ''))
+        if len(cpf) < 11 or len(cpf) > 11:
+            print('Inválido! O CPF deve ter exatamente 11 dígitos.')
+            return
+        
+        #Verifica o primeiro dígito
+        soma = 0
+        for i in range (9):
+            soma = soma + int (cpf[i]) * (10 - i)
+        if soma % 11 == 0 or soma % 11 == 1:
+            if int (cpf[9]) == 0: 
+                digito1 = True
+        else:
+            if int (cpf[9]) == 11 - (soma % 11):
+                digito1 = True
+        
+        #Verifica o segundo dígito
+        soma = 0
+        for i in range(10):
+            soma = soma + int(cpf[i]) * (11 - i)
+        if soma % 11 == 0 or soma % 11 == 1:
+            if int(cpf[10] == 0):
+                digito2 = True
+        else:
+            if int (cpf[10]) == 11 - (soma % 11):
+                digito2 = True
+
+        if digito1 and digito2:
+            return True

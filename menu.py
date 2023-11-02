@@ -264,8 +264,7 @@ def menu_inserir_livro(create, read):
             
             if checa_isbn(isbn) == False:
                 raise ValueError("O ISBN deve ser inserido corretamente.")
-
-
+            
             novo_livro = Livros(
                 titulo,
                 autores,
@@ -280,19 +279,14 @@ def menu_inserir_livro(create, read):
             )
 
             instancia_livro_autor_genero(autores, novo_livro, genero, autores_existentes, generos_existentes, create, read)
-
             print('Livro inserido com sucesso!')
-
             return
         
         except ValueError as e:
             # Captura exceções ValueError quando as entradas são inválidas
             print(f"Erro: {e}")
             print("Por favor, forneça entradas válidas.")
-        
-
-            # solicita as informações do livro:
-            
+               
 
 def menu_remocoes(read, delete):
             # solicita as informações do livro:
