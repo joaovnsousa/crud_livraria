@@ -160,6 +160,7 @@ class Cliente:
     def set_livros_comprados(self):
         return self.__livros_comprados
     
+#Sempre tem um vendedor, um cliente, uma lista de livros, uma forma de pagamento, e um status.
 class Compra:
     def __init__(self, vendedor, cliente, livros, forma_pagamento, status):
         self.vendedor = vendedor
@@ -169,7 +170,7 @@ class Compra:
         self.status = status
         self.data_compra = datetime.date.today()
         
-
+    #Atualiza o status da compra. Também deve atualizar no banco de dados quando for pro menu
     def atualiza_status(self, atualizacao):
         if atualizacao == False:
             self.status = 'Congelada'
@@ -179,6 +180,7 @@ class Compra:
             if self.status == 'Em andamento':
                 self.status = 'Completa'
 
+    #Calcula o total da compra de acordo com os descontos que o cliente tem.
     def total_compra(self):
         total = 0
         for livro in self.livros:

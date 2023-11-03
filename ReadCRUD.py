@@ -69,17 +69,19 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    #Pesquisa o cliente por nome e sobrenome
     def pesquisa_cliente_por_nome(self, nome, sobrenome):
         consulta = f'SELECT * FROM clientes WHERE nome = "{nome}" AND sobrenome = "{sobrenome}"'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
-    def pesquisa_compras_de_cliente(self, nome, sobrenome, telefone):
+    #Pesquisa os livros que o cliente comprou através de seu id
+    def pesquisa_compras_de_cliente(self, idcliente):
         consulta = f'''SELECT livros.*, clientes.* FROM clientes
                 LEFT JOIN compra ON compra.idclientes = clientes.idclientes
                 LEFT JOIN compra_livros ON compra_livros.idcompra = compra.idcompra
                 LEFT JOIN livros ON livros.idlivros = compra_livros.idlivros
-                WHERE clientes.nome = "{nome}" OR clientes.sobrenome = "{sobrenome}" AND clientes.prim_telefone = "{telefone}"'''
+                WHERE clientes.idclientes = {idcliente}'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
