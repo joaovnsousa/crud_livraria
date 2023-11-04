@@ -1,10 +1,10 @@
 from APIkeys import *
 import mysql.connector
 import datetime
-from CreateCRUD import *
-from DeleteCRUD import *
-from ReadCRUD import *
-from UpdateCRUD import *
+from CRUD.CreateCRUD import *
+from CRUD.DeleteCRUD import *
+from CRUD.ReadCRUD import *
+from CRUD.UpdateCRUD import *
 
 class Livros:
     def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma):

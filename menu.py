@@ -1,9 +1,9 @@
 from classes import *
 from prettytable import PrettyTable
-from CreateCRUD import *
-from DeleteCRUD import *
-from ReadCRUD import *
-from UpdateCRUD import *
+from CRUD.CreateCRUD import *
+from CRUD.DeleteCRUD import *
+from CRUD.ReadCRUD import *
+from CRUD.UpdateCRUD import *
 
 instancia_livraria = GerenciaLivraria()
 create = CreateCRUD(instancia_livraria)
