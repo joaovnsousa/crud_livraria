@@ -1,6 +1,7 @@
 from APIkeys import *
 import mysql.connector
 import datetime
+from prettytable import PrettyTable
 from CRUD.CreateCRUD import *
 from CRUD.DeleteCRUD import *
 from CRUD.ReadCRUD import *
@@ -160,6 +161,13 @@ class Cliente:
     def set_livros_comprados(self):
         return self.__livros_comprados
     
+    def __str__(self):
+        table_rows = ['Nome', 'Sobrenome', 'CPF', 'Primeiro telefone', 'Segundo telefone', 'Flamengo', 'Sousa', 'One Piece']
+        tabela = PrettyTable(table_rows)
+        tabela.add_row([Cliente.get_nome(self), Cliente.get_sobrenome(self), Cliente.get_cpf(self), Cliente.get_prim_telefone(self), Cliente.get_seg_telefone(self), Cliente.get_isFlamengo(self), Cliente.get_isFromSousa(self), Cliente.get_isOnePieceFan(self)]) 
+        print(tabela)
+        return ""
+
 #Sempre tem um vendedor, um cliente, uma lista de livros, uma forma de pagamento, e um status.
 class Compra:
     def __init__(self, vendedor, cliente, livros, forma_pagamento, status):

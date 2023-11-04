@@ -12,7 +12,6 @@ update = UpdateCRUD(instancia_livraria)
 delete = DeleteCRUD(instancia_livraria)
 
 def menu_vendedor(create, read, update, delete):
-    global todos_os_livros 
     todos_os_livros = read.pesquisa_geral()
     todos_os_livros = lista_de_livros(todos_os_livros)
     tabelao2(todos_os_livros)

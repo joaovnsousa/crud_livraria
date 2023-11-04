@@ -67,11 +67,18 @@ class ReadCRUD:
     def pesquisa_por_id(self, id):
         consulta = f'SELECT * FROM livros WHERE idLivros = {id}'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado   
+    
+    def consulta_login_senha(self, login, senha):
+        consulta = f'SELECT * FROM vendedor WHERE login = "{login}" AND senha = "{senha}"'
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
     #Pesquisa o cliente por nome e sobrenome
-    def pesquisa_cliente_por_nome(self, nome, sobrenome):
-        consulta = f'SELECT * FROM clientes WHERE nome = "{nome}" AND sobrenome = "{sobrenome}"'
+    def pesquisa_cliente(self, cpf):
+        consulta = f'''SELECT DISTINCT clientes.idclientes, pessoa.nome, pessoa.sobrenome, pessoa.cpf, pessoa.prim_telefone, pessoa.seg_telefone,
+                    clientes.isFlamengo, clientes.isFromSousa, clientes.isOnePieceFan
+                    FROM clientes INNER JOIN pessoa ON pessoa.idpessoa = clientes.idpessoa WHERE pessoa.cpf = "{cpf}" '''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
