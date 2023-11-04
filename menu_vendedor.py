@@ -11,7 +11,7 @@ read = ReadCRUD(instancia_livraria)
 update = UpdateCRUD(instancia_livraria)
 delete = DeleteCRUD(instancia_livraria)
 
-def menu(create, read, update, delete):
+def menu_vendedor(create, read, update, delete):
     global todos_os_livros 
     todos_os_livros = read.pesquisa_geral()
     todos_os_livros = lista_de_livros(todos_os_livros)
@@ -364,8 +364,6 @@ def instancia_livro_autor_genero(autores, livro, generos, autores_existentes, ge
         idGenero = read.pesquisa_id_genero(genero)
         create.insere_livro_genero(idLivro, idGenero[0][0])
 
-#tabelao(read)
-while True:
-    booleano = menu(create, read, update, delete)
-    if booleano == False:
-        break
+global todos_os_livros 
+todos_os_livros = read.pesquisa_geral()
+todos_os_livros = lista_de_livros(todos_os_livros)
