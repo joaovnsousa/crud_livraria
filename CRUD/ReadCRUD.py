@@ -94,85 +94,28 @@ class ReadCRUD:
     
     #Seleciona todos os livros, generos e autores; autores e gêneros são passados cada um como uma string
     def pesquisa_geral(self):
-        consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
-    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
-    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
-    livros.editora AS Editora,
-    livros.preco AS Preco,
-    livros.data_publicacao AS DataDePublicação,
-    livros.edicao AS Edição,
-    livros.isbn AS ISBN,
-    livros.volume AS Volume,
-    livros.idioma AS Idioma
-    FROM livros
-    LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-    LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
-    LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
-    LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-    GROUP BY livros.idlivros;'''
+        consulta = f'''SELECT * FROM view_estoque;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
 
     def pesquisa_livro_por_nome(self, titulo):
-        consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
-    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
-    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
-    livros.editora AS Editora,
-    livros.preco AS Preco,
-    livros.data_publicacao AS DataDePublicação,
-    livros.edicao AS Edição,
-    livros.isbn AS ISBN,
-    livros.volume AS Volume,
-    livros.idioma AS Idioma
-    FROM livros
-    LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-    LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
-    LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
-    LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-    WHERE livros.titulo = "{titulo}"
-    GROUP BY livros.idlivros;'''
+        consulta = f'''SELECT * FROM view_estoque
+    WHERE view_estoque.titulo like "%{titulo}%"
+    GROUP BY view_estoque.idlivros;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
     def pesquisa_livros_de_editora(self, editora):
-        consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
-    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
-    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
-    livros.editora AS Editora,
-    livros.preco AS Preco,
-    livros.data_publicacao AS DataDePublicação,
-    livros.edicao AS Edição,
-    livros.isbn AS ISBN,
-    livros.volume AS Volume,
-    livros.idioma AS Idioma
-    FROM livros
-    LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-    LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
-    LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
-    LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-    WHERE livros.editora = "{editora}"
-    GROUP BY livros.idlivros;'''
+        consulta = f'''SELECT * FROM view_estoque
+    WHERE view_estoque.editora like "%{editora}%"
+    GROUP BY view_estoque.idlivros;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
     def pesquisa_livros_por_genero(self, genero):
-        consulta = f'''SELECT livros.idlivros AS IDLivro, livros.titulo AS Livro, 
-    GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
-    GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
-    livros.editora AS Editora,
-    livros.preco AS Preco,
-    livros.data_publicacao AS DataDePublicação,
-    livros.edicao AS Edição,
-    livros.isbn AS ISBN,
-    livros.volume AS Volume,
-    livros.idioma AS Idioma
-    FROM livros
-    LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
-    LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
-    LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
-    LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
-    WHERE generos.nome = "{genero}"
-    GROUP BY livros.idlivros;'''
+        consulta = f'''SELECT * FROM view_estoque
+    WHERE view_estoque.genero like "%{genero}%"
+    GROUP BY view_estoque.idlivros;'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     

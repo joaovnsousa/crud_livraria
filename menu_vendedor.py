@@ -366,3 +366,5 @@ def instancia_livro_autor_genero(autores, livro, generos, autores_existentes, ge
 global todos_os_livros 
 todos_os_livros = read.pesquisa_geral()
 todos_os_livros = lista_de_livros(todos_os_livros)
+
+menu_vendedor(create, read, update, delete)

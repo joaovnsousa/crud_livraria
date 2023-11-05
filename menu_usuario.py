@@ -63,7 +63,7 @@ def submenu_livros():
             lista_ids = id_lista_livros(todos_os_livros)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
-        case 2:
+        #case 2:
             
 
 def id_lista_livros(livros):
