@@ -62,7 +62,12 @@ class ReadCRUD:
     def pesquisa_por_id(self, id):
         consulta = f'SELECT * FROM livros WHERE idLivros = {id}'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
-        return resultado   
+        return resultado 
+
+    def pesquisa_titulo_id_livro_por_id(self, id):
+        consulta = f'SELECT idlivros, titulo FROM view_estoque WHERE idLivros = {id}'
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado  
     
     def consulta_login_senha(self, login, senha):
         consulta = f'SELECT * FROM vendedor WHERE login = "{login}" AND senha = "{senha}"'

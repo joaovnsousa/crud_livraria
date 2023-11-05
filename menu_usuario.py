@@ -27,15 +27,16 @@ def menu_usuario():
             return True
         case 2:
             print('Um vendedor será autenticado para verificar seus dados cadastrais.')
+            print('------------------------------------------------------------------------------------------------')
             retorno = True
             while retorno:
                 retorno = loginVendedor()
             cpf = input('Digite o CPF do cliente: ')
             cliente = transforma_tupla_objeto(read.pesquisa_cliente(cpf), 'cliente')
             print(cliente[0])
-            return True
             
-        #case 3:
+        case 3:
+            carrinho()
 
 def transforma_tupla_objeto(tupla, param):
     lista_obj = []
@@ -97,6 +98,72 @@ def submenu_livros():
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
 
+def carrinho():
+    lista_carrinho = [7, 8, 9]
+    print('Aqui está o seu carrinho: ')
+    livros_carrinho = []
+    for ids in lista_carrinho:
+        livros_carrinho.append(read.pesquisa_titulo_id_livro_por_id(ids))
+    tabela_nome_id(livros_carrinho)
+    print('------------------------------------------------------------------------------------------------')
+    escolha = input(('Digite remover para remover algo do carrinho, digite finalizar para terminar a compra: '))
+    print('------------------------------------------------------------------------------------------------')
+    if escolha == 'remover':
+        remover_do_carrinho(lista_carrinho)
+        return
+    elif escolha == 'finalizar':
+        print('Você tem cadastro no sistema?')
+        resposta_cadastro = input('Digite sim ou não: ')
+        if resposta_cadastro == 'sim':
+            finaliza_compra(cliente, lista_carrinho)
+        if resposta_cadastro == 'não':
+            #AQUI
+            cadastro_cliente()
+            finaliza_compra(cliente, lista_carrinho)
+            return
+
+
+def cadastro_cliente():
+    nome = input('Digite seu primeiro nome: ')
+    sobrenome = input('Digite o seu sobrenome: ')
+    valida_cpf = False
+    cpf = ''
+    while valida_cpf == False:
+        cpf = input('Digite o seu CPF: ')
+        valida_cpf = instancia_livraria.verifica_cpf(cpf)
+        if valida_cpf:
+            print('Seu CPF é válido!')
+            print('------------------------------------------------------------------------------------------------')
+        else:
+            print('CPF inválido. Tente novamente')
+            print('------------------------------------------------------------------------------------------------')
+    prim_telefone = input('Digite o seu primeiro telefone: ')
+    seg_telefone = input('Digite o seu segundo telefone; se não tiver, coloque 00000: ')
+    if seg_telefone == '00000':
+        seg_telefone = None
+    isFlamengo = input('Diga sim se é fã do flamengo ou não se contrário: ')
+    isFlamengo = resposta_booleana(isFlamengo)
+    isFromSousa = input('Diga sim se é de Sousa ou não se o contrário: ')
+    isFromSousa = resposta_booleana(isFromSousa)
+    isOnePieceFan = input('Diga sim se é fã de One Piece ou não caso contrário: ')
+    isOnePieceFan = resposta_booleana(isOnePieceFan)
+    novoCliente = Cliente(nome, sobrenome, cpf, prim_telefone, seg_telefone, isFlamengo, isFromSousa, isOnePieceFan)
+    #AQUI
+    print(novoCliente)
+
+
+def resposta_booleana(resposta):
+    if resposta == 'sim':
+        return True
+    if resposta == 'não':
+        return False
+def tabela_nome_id(livros):
+    table_rows = ['ID', 'Título']
+    tabela = PrettyTable(table_rows)
+    for obj in livros:
+        for livro in obj:
+            tabela.add_row([livro[0], livro[1]])
+    print(tabela)
 def id_lista_livros(livros):
     lista_ids = []
     for livro in livros:
@@ -115,6 +182,11 @@ def adicionar_no_carrinho(lista_idlivros):
             escolha = True
         else:
             lista_carrinho.append(id_livro)
+
+def remover_do_carrinho(lista_carrinho):
+    id_livro = int(input('Digite o ID do livro que você deseja remover do carrinho: '))
+    lista_carrinho = [x for x in lista_carrinho if x != id_livro]
+    print(lista_carrinho)
 
 def loginVendedor():
     login = input('Digite o login: ')

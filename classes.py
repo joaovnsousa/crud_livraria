@@ -98,7 +98,7 @@ class GerenciaLivraria:
         resultados = self.cursor.fetchall()
         return resultados
 
-    def verifica_cpf(cpf):
+    def verifica_cpf(self, cpf):
         digito1 = False
         digito2 = False
         cpf = cpf.replace('-', ''.replace(' ', ''))
