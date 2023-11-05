@@ -21,7 +21,7 @@ def menu_usuario():
     
     match escolha:
         case 1:
-            procura_livros()
+            submenu_livros()
             return True
         case 2:
             print('Um vendedor será autenticado para verificar seus dados cadastrais.')
@@ -45,6 +45,12 @@ def transforma_tupla_objeto(tupla, param):
 
     return lista_obj
 
+
+def submenu_livros():
+    print('Deseja pesquisar livros por quais parâmetros?')
+    print('------------------------------------------------------------------------------------------------')
+    
+
 def loginVendedor():
     login = input('Digite o login: ')
     senha = input('Digite a senha: ')
@@ -55,5 +61,7 @@ def loginVendedor():
     else:
         print('Tente novamente.')
         return True
+    
+
 menu_usuario()
 
