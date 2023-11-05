@@ -1,9 +1,11 @@
 from classes import *
 from prettytable import PrettyTable
+import datetime
 from CRUD.CreateCRUD import *
 from CRUD.DeleteCRUD import *
 from CRUD.ReadCRUD import *
 from CRUD.UpdateCRUD import *
+
 
 instancia_livraria = GerenciaLivraria()
 create = CreateCRUD(instancia_livraria)
@@ -13,6 +15,7 @@ delete = DeleteCRUD(instancia_livraria)
 
 def menu_vendedor(create, read, update, delete):
     todos_os_livros = read.pesquisa_geral()
+    print(todos_os_livros)
     todos_os_livros = lista_de_livros(todos_os_livros)
     tabelao2(todos_os_livros)
     print('Olá! Seja bem-vindo ao Los Libros Hermanos.')
@@ -53,18 +56,24 @@ def menu_vendedor(create, read, update, delete):
 def lista_de_livros(livros):
     lista_livros = []
     for livro in livros:
-        instancia_livro = Livros(livro[1], livro[2], livro[3], livro[4], livro[5], livro[6], livro[7], livro[8], livro[9], livro[10])
+        instancia_livro = Livros(livro[1], livro[2], livro[3], livro[4], livro[5], livro[6], livro[7], livro[8], livro[9], livro[10], livro[11], livro[12], livro[13])
         instancia_livro.set_id(livro[0])
         lista_livros.append(instancia_livro)
     return lista_livros
 
+def verifica_livros_em_estoque(livros):
+    lista_nova_livros = []
+    for livro in livros:
+        if livro.get_data_saida() == None:
+            lista_nova_livros.append(livro)
+    return lista_nova_livros
 #Recebe uma lista de livros e passa seus dados para uma tabela, printando no final
 def tabelao2(livros):
-    table_rows = ['id', 'Título', 'Autores', 'Genero', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma']
+    table_rows = ['id', 'Título', 'Autores', 'Genero', 'Editora', 'Preço', 'Data de publicação', 'Edição', 'ISBN', 'Volume', 'Idioma', 'Data de Entrada', 'Data de Saída', 'isFromMari']
     tabela = PrettyTable(table_rows)
     for livro in livros:
         tabela.add_row([livro.get_id(), livro.get_titulo(), livro.get_autor(), livro.get_genero(), livro.get_editora(), livro.get_preco(), 
-                        livro.get_data_publicacao(), livro.get_edicao(), livro.get_isbn(), livro.get_volume(), livro.get_idioma()])
+                        livro.get_data_publicacao(), livro.get_edicao(), livro.get_isbn(), livro.get_volume(), livro.get_idioma(), livro.get_data_entrada(), livro.get_data_saida(), livro.get_isFromMari()])
     print(tabela)
 
 def menu_atualizar(read, update):
@@ -250,6 +259,13 @@ def menu_inserir_livro(create, read):
             
             idioma = input('Idioma: ')
 
+            data_entrada = datetime.date.today()
+            data_entrada = data_entrada.strftime('%Y-%m-%d')
+
+            data_saida = None
+
+            isFromMari = int(input('É de Mari? 1 para sim e 0 para não:'))
+
             # tratamento de erros:
 
             if preco < 0:
@@ -274,7 +290,10 @@ def menu_inserir_livro(create, read):
                 edicao,
                 isbn,
                 volume,
-                idioma
+                idioma,
+                data_entrada,
+                data_saida,
+                isFromMari
             )
 
             instancia_livro_autor_genero(autores, novo_livro, genero, autores_existentes, generos_existentes, create, read)
@@ -367,4 +386,4 @@ global todos_os_livros
 todos_os_livros = read.pesquisa_geral()
 todos_os_livros = lista_de_livros(todos_os_livros)
 
-menu_vendedor(create, read, update, delete)
+#menu_vendedor(create, read, update, delete)

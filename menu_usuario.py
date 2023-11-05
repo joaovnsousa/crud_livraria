@@ -59,12 +59,43 @@ def submenu_livros():
     escolha = int(input('Digite o número da opção desejada: '))
     match escolha:
         case 1:
-            tabelao2(todos_os_livros)
-            lista_ids = id_lista_livros(todos_os_livros)
+            livros_em_estoque = verifica_livros_em_estoque(todos_os_livros)
+            lista_ids = id_lista_livros(livros_em_estoque)
+            tabelao2(livros_em_estoque)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
-        #case 2:
-            
+        
+        case 2:
+            fronteira1 = float(input('Digite o primeiro valor da faixa de preço: '))
+            fronteira2 = float(input('Digite o segundo valor da faixa de preço: '))
+            livros_fronteira = verifica_livros_em_estoque(lista_de_livros(read.consulta_faixa_de_preco(fronteira1, fronteira2)))
+            lista_ids = id_lista_livros(livros_fronteira)
+            tabelao2(livros_fronteira)
+            print('Deseja adicionar algum livro no carrinho?')
+            adicionar_no_carrinho(lista_ids)
+
+        case 3:
+            genero = input('Digite o gênero dos livros: ')
+            livros_generos = verifica_livros_em_estoque(lista_de_livros(read.pesquisa_livros_por_genero(genero)))
+            lista_ids = id_lista_livros(livros_generos)
+            tabelao2(livros_generos)
+            print('Deseja adicionar algum livro no carrinho?')
+            adicionar_no_carrinho(lista_ids)
+        
+        case 4:
+            livros_mari = verifica_livros_em_estoque(lista_de_livros(read.pesquisa_livros_fabricados_em_mari()))
+            lista_ids = id_lista_livros(livros_mari)
+            tabelao2(livros_mari)
+            print('Deseja adicionar algum livro no carrinho?')
+            adicionar_no_carrinho(lista_ids)
+        
+        case 5:
+            titulo = input('Digite o título do livro: ')
+            livros_titulo = verifica_livros_em_estoque(lista_de_livros(read.pesquisa_livro_por_titulo(titulo)))
+            lista_ids = id_lista_livros(livros_titulo)
+            tabelao2(livros_titulo)
+            print('Deseja adicionar algum livro no carrinho?')
+            adicionar_no_carrinho(lista_ids)
 
 def id_lista_livros(livros):
     lista_ids = []
@@ -76,12 +107,14 @@ def adicionar_no_carrinho(lista_idlivros):
     escolha = True
     while escolha: 
         id_livro = int(input('Digite o ID do livro que você deseja colocar no carrinho. Caso não queira colocar nenhum, digite 0: '))
+        print('------------------------------------------------------------------------------------------------')
         if id_livro == 0:
             return
         if not any(id_livro == idlivro for idlivro in lista_idlivros):
             print('Digite um valor válido.')
             escolha = True
-        lista_carrinho.append(id_livro)
+        else:
+            lista_carrinho.append(id_livro)
 
 def loginVendedor():
     login = input('Digite o login: ')

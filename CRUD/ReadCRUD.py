@@ -19,11 +19,6 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
-    def pesquisa_por_titulo(self, titulo):
-        consulta = f'SELECT * FROM livros WHERE titulo = "{titulo}"'
-        resultado = self.gerencia_livraria.executa_fetch(consulta)
-        return resultado
-    
     def pesquisa_todos_os_livros(self):
         consulta = f'SELECT * FROM livros'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
@@ -74,6 +69,11 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    def pesquisa_livros_em_estoque(self):
+        consulta = f'SELECT * FROM view_estoque WHERE data_saida = NULL'
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
+    
     #Pesquisa o cliente por nome e sobrenome
     def pesquisa_cliente(self, cpf):
         consulta = f'''SELECT DISTINCT clientes.idclientes, pessoa.nome, pessoa.sobrenome, pessoa.cpf, pessoa.prim_telefone, pessoa.seg_telefone,
@@ -91,6 +91,11 @@ class ReadCRUD:
                 WHERE clientes.idclientes = {idcliente}'''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
+
+    def consulta_faixa_de_preco(self, preco1, preco2):
+        consulta = f'SELECT * FROM view_estoque WHERE preco > {preco1} and preco < {preco2}'
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
     
     #Seleciona todos os livros, generos e autores; autores e gêneros são passados cada um como uma string
     def pesquisa_geral(self):
@@ -98,7 +103,7 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
 
-    def pesquisa_livro_por_nome(self, titulo):
+    def pesquisa_livro_por_titulo(self, titulo):
         consulta = f'''SELECT * FROM view_estoque
     WHERE view_estoque.titulo like "%{titulo}%"
     GROUP BY view_estoque.idlivros;'''
@@ -116,6 +121,11 @@ class ReadCRUD:
         consulta = f'''SELECT * FROM view_estoque
     WHERE view_estoque.genero like "%{genero}%"
     GROUP BY view_estoque.idlivros;'''
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
+    
+    def pesquisa_livros_fabricados_em_mari(self):
+        consulta = f'SELECT * FROM view_estoque WHERE isFromMari = 1'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     

@@ -5,7 +5,7 @@ class CreateCRUD:
         self.gerencia_livraria = gerencia_livraria
 
     def inserir_livros(self, livro):
-        insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma, data_entrada, isFromMari) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         parametros = (
             livro.get_titulo(),
@@ -15,7 +15,9 @@ class CreateCRUD:
             livro.get_edicao(),
             livro.get_isbn(),
             livro.get_volume(),
-            livro.get_idioma()
+            livro.get_idioma(),
+            livro.get_data_entrada(),
+            livro.get_isFromMari()
         )
 
         self.gerencia_livraria.cursor.execute(insercao, parametros)

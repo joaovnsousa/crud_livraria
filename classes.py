@@ -8,7 +8,7 @@ from CRUD.ReadCRUD import *
 from CRUD.UpdateCRUD import *
 
 class Livros:
-    def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma):
+    def __init__(self, titulo, autor, genero, editora, preco, data_publicacao, edicao, isbn, volume, idioma, data_entrada, data_saida, isFromMari):
         self.__titulo = titulo
         self.__autor = autor
         self.__genero = genero
@@ -19,6 +19,9 @@ class Livros:
         self.__isbn = isbn
         self.__volume = volume
         self.__idioma = idioma
+        self.__data_entrada = data_entrada
+        self.__data_saida = data_saida
+        self.__isFromMari = isFromMari
         self.__id = 0
 
     def get_titulo(self):
@@ -51,8 +54,20 @@ class Livros:
     def get_idioma(self):
         return self.__idioma
     
+    def get_isFromMari(self):
+        return self.__isFromMari
+
     def get_id(self):
         return self.__id
+    
+    def get_data_entrada(self):
+        return self.__data_entrada
+
+    def get_data_saida(self):
+        return self.__data_saida
+
+    def set_data_saida(self, data):
+        self.__data_saida = data
     
     def set_id(self, id):
         self.__id = id
