@@ -6,6 +6,8 @@ from CRUD.DeleteCRUD import *
 from CRUD.ReadCRUD import *
 from CRUD.UpdateCRUD import *
 
+lista_carrinho = []
+
 def menu_usuario():
     print('Seja bem-vindo à livraria Los Libros Hermanos! Selecione abaixo a função que você deseja fazer: ')
     print('------------------------------------------------------------------------------------------------')
@@ -47,9 +49,39 @@ def transforma_tupla_objeto(tupla, param):
 
 
 def submenu_livros():
-    print('Deseja pesquisar livros por quais parâmetros?')
+    print('Deseja pesquisar livros e por quais parâmetros?')
     print('------------------------------------------------------------------------------------------------')
-    
+    print('1: Pesquisar todos os livros')
+    print('2: Pesquisar por faixa de preço')
+    print('3: Pesquisar por gênero')
+    print('4: Pesquisar por livros fabricados em Mari')
+    print('5: Pesquisar por nome')
+    escolha = int(input('Digite o número da opção desejada: '))
+    match escolha:
+        case 1:
+            tabelao2(todos_os_livros)
+            lista_ids = id_lista_livros(todos_os_livros)
+            print('Deseja adicionar algum livro no carrinho?')
+            adicionar_no_carrinho(lista_ids)
+        case 2:
+            
+
+def id_lista_livros(livros):
+    lista_ids = []
+    for livro in livros:
+        lista_ids.append(livro.get_id())
+    return lista_ids
+
+def adicionar_no_carrinho(lista_idlivros):
+    escolha = True
+    while escolha: 
+        id_livro = int(input('Digite o ID do livro que você deseja colocar no carrinho. Caso não queira colocar nenhum, digite 0: '))
+        if id_livro == 0:
+            return
+        if not any(id_livro == idlivro for idlivro in lista_idlivros):
+            print('Digite um valor válido.')
+            escolha = True
+        lista_carrinho.append(id_livro)
 
 def loginVendedor():
     login = input('Digite o login: ')
@@ -61,7 +93,5 @@ def loginVendedor():
     else:
         print('Tente novamente.')
         return True
-    
 
 menu_usuario()
-
