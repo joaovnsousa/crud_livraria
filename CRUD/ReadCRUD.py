@@ -93,7 +93,7 @@ class ReadCRUD:
         return resultado
     
     def pesquisa_vendedor_por_id(self, idvendedor):
-        consulta = f'SELECT nome FROM pessoa JOIN vendedor ON pessoa.idpessoa = vendedor.idpessoa WHERE pessoa.idpessoa = {idvendedor}'
+        consulta = f'SELECT nome FROM pessoa JOIN vendedor ON pessoa.idpessoa = vendedor.idpessoa WHERE vendedor.idvendedor = {idvendedor}'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
 

@@ -40,6 +40,9 @@ def menu_usuario():
             
         case 3:
             carrinho()
+        
+        case 4:
+            escolha = menu_vendedor(create, read, update, delete)
 
 def transforma_tupla_objeto(tupla, param):
     lista_obj = []
@@ -118,6 +121,9 @@ def carrinho():
         print('Você tem cadastro no sistema?')
         resposta_cadastro = input('Digite sim ou não: ')
         if resposta_cadastro == 'sim':
+            cpf = input('Digite seu CPF com todos os pontos e traços: ')
+            cliente = read.pesquisa_cliente(cpf)
+            transforma_tupla_objeto(cliente, 'cliente')
             finaliza_compra(cliente, lista_carrinho)
         if resposta_cadastro == 'não':
             #AQUI
@@ -200,7 +206,7 @@ def finaliza_compra(novoCliente, lista_carrinho):
 def tabela_compra(compra, idcompra):
     tabela_rows = ['ID Compra', 'Cliente', 'Vendedor']
     tabela1 = PrettyTable(tabela_rows)
-    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(compra.vendedor)[0]])
+    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(compra.vendedor)[0][0]])
     print(tabela1)
     print('------------------------------------------------------------------------------------------------')
     print('----------------------------------------COMPRAS-------------------------------------------------')
@@ -262,7 +268,12 @@ def loginVendedor():
 
 #clientez = Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1)
 #clientez.set_idcliente(7)
-lista_carrinho = [11]
-cadastro_cliente()
+lista = []
+livro1 = Livros('Mitologia: Contos imortais de deuses e heróis', 'Edith Hamilton', 'Mitologia, Cultura, História', 'Sextante', 35.99, '2022-08-16', 1, '978-6555644074', 1, 'Português', '2022-08-16', '2022-08-16', 1)
+livro1.set_id(11)
+lista.append(livro1)
+compra1 = Compra(2, Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1), lista, 'Dinheiro', 'Confirmado')
+tabela_compra(compra1, 2)
+#cadastro_cliente()
 #finaliza_compra(clientez, [7, 8, 9])
 menu_usuario()
