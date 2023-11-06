@@ -99,7 +99,7 @@ def submenu_livros():
             adicionar_no_carrinho(lista_ids)
 
 def carrinho():
-    lista_carrinho = [32, 43, 46]
+    lista_carrinho = [7, 8, 9]
     print('Aqui está o seu carrinho: ')
     livros_carrinho = []
     for ids in lista_carrinho:
