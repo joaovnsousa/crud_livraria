@@ -8,7 +8,5 @@ class ConexaoBanco:
             user = credencial_user,
             password = credencial_passwd,
             database = credencial_database,
-            pool_recycle = 3600,
-            pool_size = 5
         )
         self.cursor = self.conexao.cursor()
