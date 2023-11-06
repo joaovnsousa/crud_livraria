@@ -39,7 +39,7 @@ def menu_usuario():
             print(cliente[0])
             
         case 3:
-            carrinho()
+            carrinho(lista_carrinho)
         
         case 4:
             escolha = menu_vendedor(create, read, update, delete)
@@ -104,8 +104,7 @@ def submenu_livros():
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
 
-def carrinho():
-    lista_carrinho = [7, 8, 9]
+def carrinho(lista_carrinho):
     print('Aqui está o seu carrinho: ')
     livros_carrinho = []
     for ids in lista_carrinho:
@@ -186,6 +185,9 @@ def finaliza_compra(novoCliente, lista_carrinho):
     lista_livros2 = []
     lista_livros2 = lista_de_livros(lista_livros1)
     compra_atual = Compra(idvendedor, novoCliente, lista_livros2, forma_pagamento, None)
+    print(novoCliente)
+    print(lista_livros2)
+    print(compra_atual)
     print('O total da sua compra é: ', compra_atual.total_compra())
     print('------------------------------------------------------------------------------------------------')
     escolha = input('Deseja finalizar a compra? ')
@@ -206,7 +208,8 @@ def finaliza_compra(novoCliente, lista_carrinho):
 def tabela_compra(compra, idcompra):
     tabela_rows = ['ID Compra', 'Cliente', 'Vendedor']
     tabela1 = PrettyTable(tabela_rows)
-    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(compra.vendedor)[0][0]])
+    print(read.pesquisa_vendedor_por_id(8))
+    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(8)])
     print(tabela1)
     print('------------------------------------------------------------------------------------------------')
     print('----------------------------------------COMPRAS-------------------------------------------------')
@@ -244,11 +247,14 @@ def adicionar_no_carrinho(lista_idlivros):
         print('------------------------------------------------------------------------------------------------')
         if id_livro == 0:
             return
+            
         if not any(id_livro == idlivro for idlivro in lista_idlivros):
             print('Digite um valor válido.')
             escolha = True
         else:
             lista_carrinho.append(id_livro)
+            menu_usuario()
+
 
 def remover_do_carrinho(lista_carrinho):
     id_livro = int(input('Digite o ID do livro que você deseja remover do carrinho: '))
