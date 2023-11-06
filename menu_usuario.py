@@ -99,7 +99,7 @@ def submenu_livros():
             adicionar_no_carrinho(lista_ids)
 
 def carrinho():
-    lista_carrinho = [7, 8, 9]
+    lista_carrinho = [32, 43, 46]
     print('Aqui está o seu carrinho: ')
     livros_carrinho = []
     for ids in lista_carrinho:
@@ -148,6 +148,8 @@ def cadastro_cliente():
     isOnePieceFan = input('Diga sim se é fã de One Piece ou não caso contrário: ')
     isOnePieceFan = resposta_booleana(isOnePieceFan)
     novoCliente = Cliente(nome, sobrenome, cpf, prim_telefone, seg_telefone, isFlamengo, isFromSousa, isOnePieceFan)
+    print(novoCliente)
+    create.insere_novo_cliente(novoCliente)
     #AQUI
     print(novoCliente)
 

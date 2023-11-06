@@ -41,3 +41,14 @@ class CreateCRUD:
     def insere_livro_autores(self, idLivro, idAutor):
         consulta = f"INSERT INTO livro_autores (fk_idlivros, fk_idautores) VALUES ('{idLivro}', '{idAutor}')"
         self.gerencia_livraria.executa_commit(consulta)
+
+    def insere_novo_cliente(self, cliente):
+        insercao = self.gerencia_livraria.cursor.callproc('inserir_novo_cliente', (cliente.get_nome(), 
+                                                                                   cliente.get_sobrenome(), 
+                                                                                   cliente.get_cpf(), 
+                                                                                   cliente.get_prim_telefone(), 
+                                                                                   cliente.get_seg_telefone(), 
+                                                                                   cliente.get_isFlamengo(), 
+                                                                                   cliente.get_isFromSousa(), 
+                                                                                   cliente.get_isOnePieceFan()))
+        self.gerencia_livraria.executa_commit(insercao)
