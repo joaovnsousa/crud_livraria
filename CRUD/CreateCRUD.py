@@ -41,6 +41,15 @@ class CreateCRUD:
     def insere_livro_autores(self, idLivro, idAutor):
         consulta = f"INSERT INTO livro_autores (fk_idlivros, fk_idautores) VALUES ('{idLivro}', '{idAutor}')"
         self.gerencia_livraria.executa_commit(consulta)
+    
+    def insere_nova_compra(self, compra):
+        insercao = f'INSERT INTO compra(forma_pagamento, status_confirmação, data_compra, idclientes, idvendedor) VALUES ("{compra.forma_pagamento}", "{compra.status}", "{compra.data_compra}", {compra.cliente.get_idcliente()}, {compra.vendedor})'
+        self.gerencia_livraria.executa_commit(insercao)
+    
+    def insere_compra_livros(self, idcompra, idlivro):
+        insercao = f'INSERT INTO compra_livros(idcompra, idlivros) VALUES ({idcompra}, {idlivro})'
+        self.gerencia_livraria.executa_commit(insercao)
+
 
     def insere_nova_pessoa(self, pessoa):
         insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma, data_entrada, isFromMari) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"

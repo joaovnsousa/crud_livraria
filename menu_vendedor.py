@@ -460,4 +460,4 @@ global todos_os_livros
 todos_os_livros = read.pesquisa_geral()
 todos_os_livros = lista_de_livros(todos_os_livros)
 
-menu_vendedor(create, read, update, delete)
+#menu_vendedor(create, read, update, delete)

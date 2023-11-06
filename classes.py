@@ -144,7 +144,7 @@ class Cliente:
         self.__isFromSousa = isFromSousa
         self.__isOnePieceFan = isOnePieceFan
         self.__livros_comprados = None
-        self.__id = 0
+        self.__idcliente = 0
 
     def get_nome(self):
         return self.__nome
@@ -172,6 +172,12 @@ class Cliente:
     
     def get_livros_comprados(self):
         return self.__livros_comprados
+    
+    def get_idcliente(self):
+        return self.__idcliente
+    
+    def set_idcliente(self, idcliente):
+        self.__idcliente = idcliente
     
     def set_livros_comprados(self):
         return self.__livros_comprados

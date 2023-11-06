@@ -157,8 +157,8 @@ def cadastro_cliente():
     novoCliente = Cliente(nome, sobrenome, cpf, prim_telefone, seg_telefone, isFlamengo, isFromSousa, isOnePieceFan)
     print(novoCliente)
     create.insere_novo_cliente(novoCliente)
-    idcliente = instancia_livraria.cursor.lastrowid
-    finaliza_compra(idcliente, lista_carrinho)
+    novoCliente.set_idcliente(instancia_livraria.cursor.lastrowid)
+    finaliza_compra(novoCliente, lista_carrinho)
 
 def finaliza_compra(novoCliente, lista_carrinho):
     autenticacao = True
@@ -182,7 +182,18 @@ def finaliza_compra(novoCliente, lista_carrinho):
     compra_atual = Compra(idvendedor, novoCliente, lista_livros2, forma_pagamento, None)
     print('O total da sua compra é: ', compra_atual.total_compra())
     print('------------------------------------------------------------------------------------------------')
+    escolha = input('Deseja finalizar a compra? ')
+    if escolha == 'sim':
+        compra_atual.status = 'Concluída'
+    elif escolha == 'não':
+        compra_atual.status = 'Congelada'
+        return
+    create.insere_nova_compra(compra_atual)
+    idcompra = instancia_livraria.cursor.lastrowid
+    for livro in lista_livros2:
+        create.insere_compra_livros(idcompra, livro.get_id())
     
+
 
 
 def resposta_booleana(resposta):
@@ -235,5 +246,7 @@ def loginVendedor():
         print('Tente novamente.')
         return None
 
-finaliza_compra(Cliente('Rafael', 'Victor', '121301283', '12387213', '17283617823', 1, 0, 1), [7, 8, 9])
+clientez = Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1)
+clientez.set_idcliente(7)
+finaliza_compra(clientez, [7, 8, 9])
 menu_usuario()
