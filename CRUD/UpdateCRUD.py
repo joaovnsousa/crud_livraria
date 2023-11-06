@@ -85,3 +85,7 @@ class UpdateCRUD:
         consulta = f'UPDATE clientes SET isOnePieceFan = "{valor}" WHERE id_pessoa = "{idcliente}"'
         self.gerencia_livraria.executa_commit(consulta)
 
+    def atualiza_data_saida_livro(self, idlivro, data_saida):
+        consulta = f'UPDATE livros SET data_saida = "{data_saida}" WHERE idlivros = {idlivro}'
+        self.gerencia_livraria.executa_commit(consulta)
+

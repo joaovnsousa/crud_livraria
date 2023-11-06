@@ -171,7 +171,7 @@ def finaliza_compra(novoCliente, lista_carrinho):
             autenticacao = True
     forma_pagamento = input('Digite aqui sua forma de pagamento: ')
     print('------------------------------------------------------------------------------------------------')
-    while forma_pagamento != 'berries' and 'cartão' and 'boleto' and 'pix':
+    while forma_pagamento != 'berries' and 'cartão' and 'boleto' and 'pix' and 'Dinheiro':
         forma_pagamento = input('Digite aqui sua forma de pagamento: ')
     lista_livros1 = []
     for num in lista_carrinho:
@@ -192,9 +192,23 @@ def finaliza_compra(novoCliente, lista_carrinho):
     idcompra = instancia_livraria.cursor.lastrowid
     for livro in lista_livros2:
         create.insere_compra_livros(idcompra, livro.get_id())
-    
+        update.atualiza_data_saida_livro(livro.get_id(), compra_atual.data_compra)
+    print('------------------------------------------------------------------------------------------------')
+    tabela_compra(compra_atual, idcompra)
 
 
+def tabela_compra(compra, idcompra):
+    tabela_rows = ['ID Compra', 'Cliente', 'Vendedor']
+    tabela1 = PrettyTable(tabela_rows)
+    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(compra.vendedor)[0]])
+    print(tabela1)
+    print('------------------------------------------------------------------------------------------------')
+    print('----------------------------------------COMPRAS-------------------------------------------------')
+    tabela2_rows = ['idLivro', 'Livro', 'Preço']
+    tabela2 = PrettyTable(tabela2_rows)
+    for livro in compra.livros:
+        tabela2.add_row([livro.get_id(), livro.get_titulo(), livro.get_preco()])
+    print(tabela2)
 
 def resposta_booleana(resposta):
     if resposta == 'sim':
@@ -246,7 +260,9 @@ def loginVendedor():
         print('Tente novamente.')
         return None
 
-clientez = Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1)
-clientez.set_idcliente(7)
-finaliza_compra(clientez, [7, 8, 9])
+#clientez = Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1)
+#clientez.set_idcliente(7)
+lista_carrinho = [11]
+cadastro_cliente()
+#finaliza_compra(clientez, [7, 8, 9])
 menu_usuario()

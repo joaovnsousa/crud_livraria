@@ -91,6 +91,11 @@ class ReadCRUD:
         consulta = f'''SELECT * FROM pessoa INNER JOIN clientes ON pessoa.idpessoa = clientes.id_pessoa '''
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
+    
+    def pesquisa_vendedor_por_id(self, idvendedor):
+        consulta = f'SELECT nome FROM pessoa JOIN vendedor ON pessoa.idpessoa = vendedor.idpessoa WHERE pessoa.idpessoa = {idvendedor}'
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
 
     def pesquisa_livro_por_id(self, idlivro):
         consulta = f'SELECT * FROM view_estoque WHERE idlivros = {idlivro}'
