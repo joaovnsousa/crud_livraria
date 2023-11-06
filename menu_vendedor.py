@@ -51,7 +51,7 @@ def menu_vendedor(create, read, update, delete):
         case _:
             return False
         
-
+#AHAHAHAHAHA
 #Cria uma lista de livros passada através de uma lista de tuplas após uma consulta
 def lista_de_livros(livros):
     lista_livros = []
