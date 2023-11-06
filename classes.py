@@ -192,6 +192,7 @@ class Compra:
         self.forma_pagamento = forma_pagamento
         self.status = status
         self.data_compra = datetime.date.today()
+        self.data_compra = self.data_compra.strftime('%Y-%m-%d')
         
     #Atualiza o status da compra. Também deve atualizar no banco de dados quando for pro menu
     def atualiza_status(self, atualizacao):
@@ -207,7 +208,7 @@ class Compra:
     def total_compra(self):
         total = 0
         for livro in self.livros:
-            total = total + livro.get_preco()
+            total = total + float (livro.get_preco())
         if self.cliente.get_isFlamengo() or self.cliente.get_isFromSousa() or self.cliente.get_isOnePieceFan():
             desconto = total * 0.25
             total = total - desconto

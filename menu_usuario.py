@@ -30,7 +30,10 @@ def menu_usuario():
             print('------------------------------------------------------------------------------------------------')
             retorno = True
             while retorno:
-                retorno = loginVendedor()
+                if loginVendedor() != None:
+                    retorno = False
+                else:
+                    retorno = True
             cpf = input('Digite o CPF do cliente: ')
             cliente = transforma_tupla_objeto(read.pesquisa_cliente(cpf), 'cliente')
             print(cliente[0])
@@ -119,7 +122,6 @@ def carrinho():
         if resposta_cadastro == 'não':
             #AQUI
             cadastro_cliente()
-            finaliza_compra(cliente, lista_carrinho)
             return
 
 
@@ -138,20 +140,49 @@ def cadastro_cliente():
             print('CPF inválido. Tente novamente')
             print('------------------------------------------------------------------------------------------------')
     prim_telefone = input('Digite o seu primeiro telefone: ')
+    print('------------------------------------------------------------------------------------------------')
     seg_telefone = input('Digite o seu segundo telefone; se não tiver, coloque 00000: ')
+    print('------------------------------------------------------------------------------------------------')
     if seg_telefone == '00000':
         seg_telefone = None
     isFlamengo = input('Diga sim se é fã do flamengo ou não se contrário: ')
+    print('------------------------------------------------------------------------------------------------')
     isFlamengo = resposta_booleana(isFlamengo)
     isFromSousa = input('Diga sim se é de Sousa ou não se o contrário: ')
+    print('------------------------------------------------------------------------------------------------')
     isFromSousa = resposta_booleana(isFromSousa)
     isOnePieceFan = input('Diga sim se é fã de One Piece ou não caso contrário: ')
+    print('------------------------------------------------------------------------------------------------')
     isOnePieceFan = resposta_booleana(isOnePieceFan)
     novoCliente = Cliente(nome, sobrenome, cpf, prim_telefone, seg_telefone, isFlamengo, isFromSousa, isOnePieceFan)
     print(novoCliente)
     create.insere_novo_cliente(novoCliente)
-    #AQUI
-    print(novoCliente)
+    idcliente = instancia_livraria.cursor.lastrowid
+    finaliza_compra(idcliente, lista_carrinho)
+
+def finaliza_compra(novoCliente, lista_carrinho):
+    autenticacao = True
+    idvendedor = 0
+    while autenticacao:
+        idvendedor = loginVendedor()
+        if idvendedor != None:
+            autenticacao = False
+        else:
+            autenticacao = True
+    forma_pagamento = input('Digite aqui sua forma de pagamento: ')
+    print('------------------------------------------------------------------------------------------------')
+    while forma_pagamento != 'berries' and 'cartão' and 'boleto' and 'pix':
+        forma_pagamento = input('Digite aqui sua forma de pagamento: ')
+    lista_livros1 = []
+    for num in lista_carrinho:
+        lista_livros1.append(read.pesquisa_livro_por_id(num))
+    lista_livros1 = [tupla for sublist in lista_livros1 for tupla in sublist]
+    lista_livros2 = []
+    lista_livros2 = lista_de_livros(lista_livros1)
+    compra_atual = Compra(idvendedor, novoCliente, lista_livros2, forma_pagamento, None)
+    print('O total da sua compra é: ', compra_atual.total_compra())
+    print('------------------------------------------------------------------------------------------------')
+    
 
 
 def resposta_booleana(resposta):
@@ -159,6 +190,7 @@ def resposta_booleana(resposta):
         return True
     if resposta == 'não':
         return False
+    
 def tabela_nome_id(livros):
     table_rows = ['ID', 'Título']
     tabela = PrettyTable(table_rows)
@@ -166,6 +198,8 @@ def tabela_nome_id(livros):
         for livro in obj:
             tabela.add_row([livro[0], livro[1]])
     print(tabela)
+
+
 def id_lista_livros(livros):
     lista_ids = []
     for livro in livros:
@@ -196,9 +230,10 @@ def loginVendedor():
     consulta = read.consulta_login_senha(login, senha)
     if consulta != []:
         print('Seja bem-vindo ao sistema!')
-        return False
+        return consulta[0][0]
     else:
         print('Tente novamente.')
-        return True
+        return None
 
+finaliza_compra(Cliente('Rafael', 'Victor', '121301283', '12387213', '17283617823', 1, 0, 1), [7, 8, 9])
 menu_usuario()
