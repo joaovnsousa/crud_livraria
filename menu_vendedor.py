@@ -13,6 +13,7 @@ read = ReadCRUD(instancia_livraria)
 update = UpdateCRUD(instancia_livraria)
 delete = DeleteCRUD(instancia_livraria)
 
+
 def menu_vendedor(create, read, update, delete):
     todos_os_livros = read.pesquisa_geral()
     print(todos_os_livros)
@@ -25,6 +26,7 @@ def menu_vendedor(create, read, update, delete):
     print('2: Atualizar os dados de algum livro')
     print('3: Consultar um livro')
     print('4: Remover um livro')
+    print('5: Atualizar os dados de algum cliente')
     print('0: Sair do sistema')
     escolha = int(input('Digite sua escolha: '))
     match escolha:
@@ -45,6 +47,11 @@ def menu_vendedor(create, read, update, delete):
         case 4:
             print('-------------------------------------------')
             menu_remocoes(read, delete)
+
+        case 5:
+            print('-------------------------------------------')
+            menu_atualizar_cliente(read, update)
+
         case 0:
             return False
 
@@ -141,6 +148,72 @@ def menu_atualizar(read, update):
         case 0:
             return False
         
+
+def menu_atualizar_cliente(read, update):
+    todos_os_clientes = read.pesquisa_cliente_geral()
+    print(todos_os_clientes)
+    idcliente = int(input('Escolha o id do cliente que deseja atualizar dados: '))
+    print('Por qual desses deseja fazer a atualização?\n1: Nome\n2: Sobrenome\n3: CPF\n4: Primeiro Telefone\n5: Segundo Telefone\n\
+            6: Se é flamenguista\n7: Se é de Sousa\n8: Se é fã de One piece\n0: Sair')
+    escolha = int(input('Digite sua escolha: '))
+
+    match escolha:
+        case 1:
+            nome_atualizado = input('Digite o novo nome do cliente: ')
+            update.atualiza_nome_cliente(idcliente, nome_atualizado)
+            print("Nome atualizado com sucesso!")
+            return True
+        
+        case 2:
+            sobrenome_atualizado = input('Digite o novo sobrenome do cliente: ')
+            update.atualiza_sobrenome_cliente(idcliente, sobrenome_atualizado)
+            print("Sobrenome atualizado com sucesso!")
+            return True
+
+        case 3:
+            cpf_atualizado = input('Digite o novo cpf do cliente: ')
+            update.atualiza_cpf_cliente(idcliente, cpf_atualizado)
+            print("CPF atualizado com sucesso!")
+            return True
+
+        case 4:
+            ptelefone_atualizado = input('Digite o novo numero do telefone: ')
+            update.atualiza_ptelefone_cliente(idcliente, ptelefone_atualizado)
+            print("Telefone atualizado com sucesso!")
+            return True                
+
+        case 5:
+            stelefone_atualizado = input('Digite o novo numero do telefone: ')
+            update.atualiza_stelefone_cliente(idcliente, stelefone_atualizado)
+            print("Telefone atualizado com sucesso!")
+            return True                
+
+        case 6:
+            flamengo_atualizado = input('Digite 1 se o cliente for flamenguista, do contrário 0: ')
+            update.atualiza_flamengo_cliente(idcliente, flamengo_atualizado)
+            print("Usuário atualizado com sucesso!")
+            return True
+        
+        case 7:
+            sousa_atualizado = input('Digite 1 se o cliente for de Sousa, do contrário 0: ')
+            update.atualiza_sousa_cliente(idcliente, sousa_atualizado)
+            print("Usuário atualizado com sucesso!")
+            return True
+    
+        case 8:
+            onepiece_atualizado = input('Digite 1 se o cliente for fã de One Piece, do contrário 0: ')
+            update.atualiza_onepiece_cliente(idcliente, onepiece_atualizado)
+            print("Usuário atualizado com sucesso!")
+            return True
+        
+                
+        case 0:
+            return False
+
+
+
+
+
 def menu_escolha_consulta(read):
     print('Por qual desses deseja fazer a consulta?\n1: Título\n2: Autor\n3: Gênero\n4: Editora\n0: Voltar')
     escolha = int(input('Digite sua escolha: '))
@@ -182,6 +255,7 @@ def atualiza_autor(read, update, idlivro):
     for autor in autores:
         nome_novo = input('Digite o novo nome do autor:')
         update.atualiza_nome_autor(nome_novo, autor[0])
+
 
 def atualiza_genero(read, update, idlivro):
     generos = read.consulta_generos_de_um_livro(idlivro)
@@ -386,4 +460,4 @@ global todos_os_livros
 todos_os_livros = read.pesquisa_geral()
 todos_os_livros = lista_de_livros(todos_os_livros)
 
-#menu_vendedor(create, read, update, delete)
+menu_vendedor(create, read, update, delete)

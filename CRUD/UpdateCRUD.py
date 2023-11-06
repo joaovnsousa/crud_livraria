@@ -52,3 +52,36 @@ class UpdateCRUD:
     def atualiza_nome_genero(self, nome, nome_antigo):
         consulta = f'UPDATE generos SET nome = "{nome}" WHERE nome = "{nome_antigo}"'
         self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_nome_cliente(self, idcliente, valor):
+        consulta = f'UPDATE pessoa SET nome = "{valor}" WHERE idpessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_sobrenome_cliente(self, idcliente, valor):
+        consulta = f'UPDATE pessoa SET sobrenome = "{valor}" WHERE idpessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_cpf_cliente(self, idcliente, valor):
+        consulta = f'UPDATE pessoa SET cpf = "{valor}" WHERE idpessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_ptelefone_cliente(self, idcliente, valor):
+        consulta = f'UPDATE pessoa SET prim_telefone = "{valor}" WHERE idpessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_stelefone_cliente(self, idcliente, valor):
+        consulta = f'UPDATE pessoa SET seg_telefone = "{valor}" WHERE idpessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_flamengo_cliente(self, idcliente, valor):
+        consulta = f'UPDATE clientes SET isFlamengo = "{valor}" WHERE id_pessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_sousa_cliente(self, idcliente, valor):
+        consulta = f'UPDATE clientes SET isFromSousa = "{valor}" WHERE id_pessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+
+    def atualiza_onepiece_cliente(self, idcliente, valor):
+        consulta = f'UPDATE clientes SET isOnePieceFan = "{valor}" WHERE id_pessoa = "{idcliente}"'
+        self.gerencia_livraria.executa_commit(consulta)
+

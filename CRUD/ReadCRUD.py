@@ -87,6 +87,11 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    def pesquisa_cliente_geral(self):
+        consulta = f'''SELECT * FROM pessoa INNER JOIN clientes ON pessoa.idpessoa = clientes.id_pessoa '''
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
+
     #Pesquisa os livros que o cliente comprou através de seu id
     def pesquisa_compras_de_cliente(self, idcliente):
         consulta = f'''SELECT livros.*, clientes.* FROM clientes
