@@ -22,6 +22,7 @@ class ReadCRUD:
     def pesquisa_todos_os_livros(self):
         consulta = f'SELECT * FROM livros'
         resultado = self.gerencia_livraria.executa_fetch(consulta)
+        print(resultado)
         return resultado
 
     def pesquisa_por_autor(self, idAutores):

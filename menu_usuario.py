@@ -216,6 +216,8 @@ def tabela_compra(compra, idcompra):
     for livro in compra.livros:
         tabela2.add_row([livro.get_id(), livro.get_titulo(), livro.get_preco()])
     print(tabela2)
+    create.insere_nova_view()
+    menu_usuario()
 
 def resposta_booleana(resposta):
     if resposta == 'sim':

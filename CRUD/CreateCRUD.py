@@ -57,6 +57,44 @@ class CreateCRUD:
         insercao = f'INSERT INTO clientes(idpessoa, isFlamengo, isFromSousa, isOnePieceFan) VALUES ({idpessoa}, {cliente.get_isFlamengo()}, {cliente.get_isFromSousa()}, {cliente.get_isOnePieceFan()})'
         self.gerencia_livraria.executa_commit(insercao)
 
+    def insere_nova_view(self):
+        consulta = '''CREATE OR REPLACE VIEW view_estoque AS SELECT DISTINCT 
+        livros.idlivros,
+        livros.titulo,
+        GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS autores,
+        GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS genero,
+        livros.editora,
+        livros.preco,
+        livros.data_publicacao,
+        livros.edicao,
+        livros.isbn,
+        livros.volume,
+        livros.idioma,
+        livros.data_entrada,
+        livros.data_saida,
+        livros.isFromMari FROM livros
+        JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
+        JOIN autores ON livro_autores.fk_idautores = autores.idautores
+        JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
+        JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
+        GROUP BY
+        livros.idlivros, 
+        livros.titulo,
+        livros.editora,
+        livros.preco,
+        livros.data_publicacao,
+        livros.edicao,
+        livros.isbn,
+        livros.volume,
+        livros.idioma,
+        livros.data_entrada,
+        livros.data_saida,
+        livros.isFromMari;'''
+
+        self.gerencia_livraria.cursor.execute(consulta)
+        self.gerencia_livraria.conexao.commit()
+
+
     def insere_nova_pessoa(self, pessoa):
         insercao = "INSERT INTO livros(titulo, editora, preco, data_publicacao, edicao, isbn, volume, idioma, data_entrada, isFromMari) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
