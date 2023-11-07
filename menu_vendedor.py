@@ -26,6 +26,7 @@ def menu_vendedor(create, read, update, delete):
     print('3: Consultar um livro')
     print('4: Remover um livro')
     print('5: Atualizar os dados de algum cliente')
+    print('6: Mostrar as vendas de um vendedor')
     print('0: Sair do sistema')
     escolha = int(input('Digite sua escolha: '))
     match escolha:
@@ -50,6 +51,9 @@ def menu_vendedor(create, read, update, delete):
         case 5:
             print('-------------------------------------------')
             menu_atualizar_cliente(read, update)
+        case 6:
+            print('-------------------------------------------')
+            mostra_vendas_vendedores(read)
 
         case 0:
             return True
@@ -66,6 +70,19 @@ def lista_de_livros(livros):
         instancia_livro.set_id(livro[0])
         lista_livros.append(instancia_livro)
     return lista_livros
+
+def mostra_vendas_vendedores(read):
+    consulta = read.consulta_vendas_vendedor()
+    table_rows = ['ID da Compra', 'ID do Cliente', 'Nome do Cliente', 'ID do Vendedor', 'Nome do Vendedor', 'Data da compra']
+    tabela = PrettyTable(table_rows)
+    for elemento in consulta:
+        tabela.add_row([elemento[0], elemento[1], elemento[2], elemento[3], elemento[4], elemento[5]])
+    print(tabela)
+    idCompra = int(input('Digite o número do ID da compra que você deseja ver quais livros foram comprados: '))
+    dados = read.consulta_livros_compra_id(idCompra)
+    print(dados)
+    dados = lista_de_livros(dados)
+    tabelao2(dados)
 
 def verifica_livros_em_estoque(livros):
     lista_nova_livros = []

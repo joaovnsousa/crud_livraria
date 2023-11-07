@@ -103,6 +103,47 @@ class ReadCRUD:
         resultado = self.gerencia_livraria.executa_fetch(consulta)
         return resultado
     
+    def consulta_livros_compra_id(self, idcompra):
+        consulta = f''' SELECT livros.idlivros AS IDLivro, 
+       livros.titulo AS Livro, 
+       GROUP_CONCAT(DISTINCT autores.nome SEPARATOR ', ') AS Autores,
+       GROUP_CONCAT(DISTINCT generos.nome SEPARATOR ', ') AS Generos,
+       livros.editora AS Editora,
+       livros.preco AS Preco,
+       livros.data_publicacao AS DataDePublicação,
+       livros.edicao AS Edição,
+       livros.isbn AS ISBN,
+       livros.volume AS Volume,
+       livros.idioma AS Idioma,
+       livros.data_entrada AS DataEntrada,
+       livros.data_saida AS DataSaida,
+       livros.isFromMari AS isFromMari
+FROM compra_livros
+LEFT JOIN livros ON compra_livros.idlivros = livros.idlivros
+LEFT JOIN livro_autores ON livros.idlivros = livro_autores.fk_idlivros
+LEFT JOIN autores ON livro_autores.fk_idautores = autores.idautores
+LEFT JOIN livro_generos ON livros.idlivros = livro_generos.f_idlivros
+LEFT JOIN generos ON livro_generos.f_idgeneros = generos.idgeneros
+WHERE compra_livros.idcompra = {idcompra}
+GROUP BY livros.idlivros;'''
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
+
+    def consulta_vendas_vendedor(self):
+        consulta = f'''SELECT compra.idcompra, 
+       clientes.idClientes AS idCliente, 
+       CONCAT(pessoa_cliente.nome, ' ', pessoa_cliente.sobrenome) AS nomeCliente, 
+       vendedor.idVendedor AS idVendedor, 
+       CONCAT(pessoa_vendedor.nome, ' ', pessoa_vendedor.sobrenome) AS nomeVendedor,
+       compra.data_compra
+FROM compra
+JOIN clientes ON compra.idclientes = clientes.idClientes
+JOIN vendedor ON compra.idvendedor = vendedor.idVendedor
+JOIN pessoa AS pessoa_cliente ON clientes.idPessoa = pessoa_cliente.idPessoa
+JOIN pessoa AS pessoa_vendedor ON vendedor.idPessoa = pessoa_vendedor.idPessoa; '''
+        resultado = self.gerencia_livraria.executa_fetch(consulta)
+        return resultado
+    
     #Pesquisa os livros que o cliente comprou através de seu id
     def pesquisa_compras_de_cliente(self, idcliente):
         consulta = f'''SELECT livros.*, clientes.* FROM clientes
