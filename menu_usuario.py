@@ -110,6 +110,7 @@ def submenu_livros():
             return
 
 def carrinho():
+    global lista_carrinho
     if lista_carrinho == []:
         print('Carrinho vazio! Retorne e coloque produtos no carrinho.')
         return
@@ -132,13 +133,14 @@ def carrinho():
             cliente = read.pesquisa_cliente(cpf)
             transf_cliente = Cliente(cliente[0][1], cliente[0][2], cliente[0][3], cliente[0][4], cliente[0][5], cliente[0][6], cliente[0][7], cliente[0][8])
             transf_cliente.set_idcliente(cliente[0][0])
-            finaliza_compra(transf_cliente, lista_carrinho)
+            finaliza_compra(transf_cliente)
         if resposta_cadastro == 'não':
             cadastro_cliente()
             return
 
 
 def cadastro_cliente():
+    global lista_carrinho
     nome = input('Digite seu primeiro nome: ')
     sobrenome = input('Digite o seu sobrenome: ')
     valida_cpf = False
@@ -174,6 +176,7 @@ def cadastro_cliente():
     finaliza_compra(novoCliente, lista_carrinho)
 
 def finaliza_compra(novoCliente):
+    global lista_carrinho
     autenticacao = True
     idvendedor = 0
     while autenticacao:
@@ -184,7 +187,7 @@ def finaliza_compra(novoCliente):
             autenticacao = True
     forma_pagamento = input('Digite aqui sua forma de pagamento: ')
     print('------------------------------------------------------------------------------------------------')
-    while forma_pagamento != 'berries' and 'cartão' and 'boleto' and 'pix' and 'Dinheiro':
+    while forma_pagamento != 'berries' and forma_pagamento != 'cartão' and forma_pagamento != 'boleto' and forma_pagamento != 'pix' and forma_pagamento != 'Dinheiro':
         forma_pagamento = input('Digite aqui sua forma de pagamento: ')
     lista_livros1 = []
     for num in lista_carrinho:
@@ -214,8 +217,7 @@ def finaliza_compra(novoCliente):
 def tabela_compra(compra, idcompra):
     tabela_rows = ['ID Compra', 'Cliente', 'Vendedor']
     tabela1 = PrettyTable(tabela_rows)
-    print(read.pesquisa_vendedor_por_id(8))
-    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(8)])
+    tabela1.add_row([idcompra, compra.cliente.get_nome(), read.pesquisa_vendedor_por_id(compra.vendedor)])
     print(tabela1)
     print('------------------------------------------------------------------------------------------------')
     print('----------------------------------------COMPRAS-------------------------------------------------')
