@@ -16,7 +16,6 @@ delete = DeleteCRUD(instancia_livraria)
 
 def menu_vendedor(create, read, update, delete):
     todos_os_livros = read.pesquisa_geral()
-    print(todos_os_livros)
     todos_os_livros = lista_de_livros(todos_os_livros)
     tabelao2(todos_os_livros)
     print('Olá! Seja bem-vindo ao Los Libros Hermanos.')
@@ -53,7 +52,7 @@ def menu_vendedor(create, read, update, delete):
             menu_atualizar_cliente(read, update)
 
         case 0:
-            return False
+            return True
 
         case _:
             return False

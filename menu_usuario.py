@@ -9,6 +9,9 @@ from CRUD.UpdateCRUD import *
 lista_carrinho = []
 
 def menu_usuario():
+    print('')
+    print('')
+    print('')
     print('Seja bem-vindo à livraria Los Libros Hermanos! Selecione abaixo a função que você deseja fazer: ')
     print('------------------------------------------------------------------------------------------------')
     print('1: Procurar livros')
@@ -35,23 +38,20 @@ def menu_usuario():
                 else:
                     retorno = True
             cpf = input('Digite o CPF do cliente: ')
-            cliente = transforma_tupla_objeto(read.pesquisa_cliente(cpf), 'cliente')
-            
+            cliente = read.pesquisa_cliente(cpf)
+            cliente = Cliente(cliente[0][1], cliente[0][2], cliente[0][3], cliente[0][4], cliente[0][5], cliente[0][6], cliente[0][7], cliente[0][8])
+            print(cliente)
+            return True
         case 3:
             carrinho(lista_carrinho)
-        
+            return True
         case 4:
+            vendedor = loginVendedor()
             escolha = menu_vendedor(create, read, update, delete)
-
-def transforma_tupla_objeto(tupla, param):
-    lista_obj = []
-    if param == 'cliente':
-        for cliente in tupla:
-            instancia_cliente = Cliente(cliente[1], cliente[2], cliente[3], cliente[4], cliente[5], cliente[6], cliente[7], cliente[8])
-            lista_obj.append(instancia_cliente)
-    #elif param == 'vendedor':
-
-    return lista_obj
+            return True
+        
+        case _:
+            return False
 
 
 def submenu_livros():
@@ -70,6 +70,7 @@ def submenu_livros():
             tabelao2(livros_em_estoque)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
+            return
         
         case 2:
             fronteira1 = float(input('Digite o primeiro valor da faixa de preço: '))
@@ -79,6 +80,7 @@ def submenu_livros():
             tabelao2(livros_fronteira)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
+            return
 
         case 3:
             genero = input('Digite o gênero dos livros: ')
@@ -87,6 +89,7 @@ def submenu_livros():
             tabelao2(livros_generos)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
+            return
         
         case 4:
             livros_mari = verifica_livros_em_estoque(lista_de_livros(read.pesquisa_livros_fabricados_em_mari()))
@@ -94,6 +97,7 @@ def submenu_livros():
             tabelao2(livros_mari)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
+            return
         
         case 5:
             titulo = input('Digite o título do livro: ')
@@ -102,8 +106,12 @@ def submenu_livros():
             tabelao2(livros_titulo)
             print('Deseja adicionar algum livro no carrinho?')
             adicionar_no_carrinho(lista_ids)
+            return
 
 def carrinho(lista_carrinho):
+    if lista_carrinho == []:
+        print('Carrinho vazio! Retorne e coloque produtos no carrinho.')
+        return
     print('Aqui está o seu carrinho: ')
     livros_carrinho = []
     for ids in lista_carrinho:
@@ -125,7 +133,6 @@ def carrinho(lista_carrinho):
             transf_cliente.set_idcliente(cliente[0][0])
             finaliza_compra(transf_cliente, lista_carrinho)
         if resposta_cadastro == 'não':
-            #AQUI
             cadastro_cliente()
             return
 
@@ -185,7 +192,7 @@ def finaliza_compra(novoCliente, lista_carrinho):
     lista_livros2 = []
     lista_livros2 = lista_de_livros(lista_livros1)
     compra_atual = Compra(idvendedor, novoCliente, lista_livros2, forma_pagamento, None)
-    print(compra_atual.cliente.get_isFlamengo())
+    print(compra_atual.vendedor)
     print('O total da sua compra é: ', compra_atual.total_compra())
     print('------------------------------------------------------------------------------------------------')
     escolha = input('Deseja finalizar a compra? ')
@@ -217,7 +224,6 @@ def tabela_compra(compra, idcompra):
         tabela2.add_row([livro.get_id(), livro.get_titulo(), livro.get_preco()])
     print(tabela2)
     create.insere_nova_view()
-    menu_usuario()
 
 def resposta_booleana(resposta):
     if resposta == 'sim':
@@ -253,7 +259,7 @@ def adicionar_no_carrinho(lista_idlivros):
             escolha = True
         else:
             lista_carrinho.append(id_livro)
-            menu_usuario()
+            return
 
 
 def remover_do_carrinho(lista_carrinho):
@@ -274,12 +280,14 @@ def loginVendedor():
 
 #clientez = Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1)
 #clientez.set_idcliente(7)
-lista = []
-livro1 = Livros('Mitologia: Contos imortais de deuses e heróis', 'Edith Hamilton', 'Mitologia, Cultura, História', 'Sextante', 35.99, '2022-08-16', 1, '978-6555644074', 1, 'Português', '2022-08-16', '2022-08-16', 1)
-livro1.set_id(11)
-lista.append(livro1)
-compra1 = Compra(2, Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1), lista, 'Dinheiro', 'Confirmado')
-tabela_compra(compra1, 2)
+#lista = []
+#livro1 = Livros('Mitologia: Contos imortais de deuses e heróis', 'Edith Hamilton', 'Mitologia, Cultura, História', 'Sextante', 35.99, '2022-08-16', 1, '978-6555644074', 1, 'Português', '2022-08-16', '2022-08-16', 1)
+#livro1.set_id(11)
+#lista.append(livro1)
+#compra1 = Compra(2, Cliente('Rafael', 'Victor', '111.120.244-33', '(83)98694-4876', None, 1, 0, 1), lista, 'Dinheiro', 'Confirmado')
+#tabela_compra(compra1, 2)
 #cadastro_cliente()
 #finaliza_compra(clientez, [7, 8, 9])
-menu_usuario()
+variavel = True
+while variavel:
+    variavel = menu_usuario()
