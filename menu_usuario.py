@@ -6,6 +6,7 @@ from CRUD.DeleteCRUD import *
 from CRUD.ReadCRUD import *
 from CRUD.UpdateCRUD import *
 
+global lista_carrinho
 lista_carrinho = []
 
 def menu_usuario():
@@ -43,7 +44,7 @@ def menu_usuario():
             print(cliente)
             return True
         case 3:
-            carrinho(lista_carrinho)
+            carrinho()
             return True
         case 4:
             vendedor = loginVendedor()
@@ -108,7 +109,7 @@ def submenu_livros():
             adicionar_no_carrinho(lista_ids)
             return
 
-def carrinho(lista_carrinho):
+def carrinho():
     if lista_carrinho == []:
         print('Carrinho vazio! Retorne e coloque produtos no carrinho.')
         return
@@ -121,7 +122,7 @@ def carrinho(lista_carrinho):
     escolha = input(('Digite remover para remover algo do carrinho, digite finalizar para terminar a compra: '))
     print('------------------------------------------------------------------------------------------------')
     if escolha == 'remover':
-        remover_do_carrinho(lista_carrinho)
+        remover_do_carrinho()
         return
     elif escolha == 'finalizar':
         print('Você tem cadastro no sistema?')
@@ -172,7 +173,7 @@ def cadastro_cliente():
     novoCliente.set_idcliente(instancia_livraria.cursor.lastrowid)
     finaliza_compra(novoCliente, lista_carrinho)
 
-def finaliza_compra(novoCliente, lista_carrinho):
+def finaliza_compra(novoCliente):
     autenticacao = True
     idvendedor = 0
     while autenticacao:
@@ -262,10 +263,10 @@ def adicionar_no_carrinho(lista_idlivros):
             return
 
 
-def remover_do_carrinho(lista_carrinho):
+def remover_do_carrinho():
+    global lista_carrinho
     id_livro = int(input('Digite o ID do livro que você deseja remover do carrinho: '))
     lista_carrinho = [x for x in lista_carrinho if x != id_livro]
-    print(lista_carrinho)
 
 def loginVendedor():
     login = input('Digite o login: ')
