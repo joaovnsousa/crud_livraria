@@ -36,7 +36,6 @@ def menu_usuario():
                     retorno = True
             cpf = input('Digite o CPF do cliente: ')
             cliente = transforma_tupla_objeto(read.pesquisa_cliente(cpf), 'cliente')
-            print(cliente[0])
             
         case 3:
             carrinho(lista_carrinho)
@@ -122,8 +121,9 @@ def carrinho(lista_carrinho):
         if resposta_cadastro == 'sim':
             cpf = input('Digite seu CPF com todos os pontos e traços: ')
             cliente = read.pesquisa_cliente(cpf)
-            transforma_tupla_objeto(cliente, 'cliente')
-            finaliza_compra(cliente, lista_carrinho)
+            transf_cliente = Cliente(cliente[0][1], cliente[0][2], cliente[0][3], cliente[0][4], cliente[0][5], cliente[0][6], cliente[0][7], cliente[0][8])
+            transf_cliente.set_idcliente(cliente[0][0])
+            finaliza_compra(transf_cliente, lista_carrinho)
         if resposta_cadastro == 'não':
             #AQUI
             cadastro_cliente()
@@ -185,9 +185,7 @@ def finaliza_compra(novoCliente, lista_carrinho):
     lista_livros2 = []
     lista_livros2 = lista_de_livros(lista_livros1)
     compra_atual = Compra(idvendedor, novoCliente, lista_livros2, forma_pagamento, None)
-    print(novoCliente)
-    print(lista_livros2)
-    print(compra_atual)
+    print(compra_atual.cliente.get_isFlamengo())
     print('O total da sua compra é: ', compra_atual.total_compra())
     print('------------------------------------------------------------------------------------------------')
     escolha = input('Deseja finalizar a compra? ')
